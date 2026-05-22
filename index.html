@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricepadi - Your Price Buddy</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m6 9 6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1rem;
+            padding-right: 2.5rem !important;
+        }
+        .category-card:hover .animated-bg {
+            transform: scale(1.1);
+        }
+        .category-card:hover .icon-bounce {
+            transform: translateY(-4px) scale(1.05);
+        }
+    </style>
+</head>
+<!-- PRICEPADI LOADER -->
+<div id="pricepadiLoader"
+     class="fixed inset-0 z-[9999] bg-white flex items-center justify-center transition-all duration-500">
+
+    <div class="flex flex-col items-center">
+
+        <!-- Animated Logo -->
+        <div class="relative mb-5">
+
+            <!-- Outer Pulse -->
+            <div class="absolute inset-0 rounded-3xl bg-emerald-400/30 animate-ping"></div>
+
+            <!-- Main Box -->
+            <div class="relative w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shadow-2xl">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke-width="2.2"
+                     stroke="currentColor"
+                     class="w-10 h-10 text-white">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4 19h16M7 16v-5M12 16V8M17 16v-3" />
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 13l4-4 3 2 5-5" />
+
+                </svg>
+
+            </div>
+
+        </div>
+
+        <!-- Brand -->
+        <h1 class="text-3xl font-extrabold tracking-tight text-emerald-600">
+            Price<span class="text-slate-900">padi</span>
+        </h1>
+
+        <!-- Loading Text -->
+        <p class="text-sm text-slate-500 mt-2">
+            Loading live market prices...
+        </p>
+
+        <!-- Animated Dots -->
+        <div class="flex gap-2 mt-5">
+
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-bounce"></span>
+
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-bounce [animation-delay:0.15s]"></span>
+
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-bounce [animation-delay:0.3s]"></span>
+
+        </div>
+
+    </div>
+
+</div>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col pb-24">
+
+    <!-- NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100">
+
+    <!-- TOP NAV -->
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+
+            <!-- Logo Icon -->
+            <div class="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke-width="2.2"
+                     stroke="currentColor"
+                     class="w-5 h-5 text-white">
+
+                    <!-- Bar Chart -->
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4 19h16M7 16v-5M12 16V8M17 16v-3" />
+
+                    <!-- Upward Trend Line -->
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 13l4-4 3 2 5-5" />
+                </svg>
+            </div>
+
+            <!-- Logo Area -->
+            <div class="flex items-center gap-3 shrink-0">
+                <span onclick="resetAllFilters()"
+                      class="text-2xl font-bold tracking-tight text-emerald-600 cursor-pointer">
+                    Price<span class="text-slate-900">padi</span>
+                </span>
+            </div>
+
+        </div>
+
+        <!-- DESKTOP SEARCH -->
+        <div class="hidden md:block flex-1 max-w-md lg:max-w-2xl mx-2 md:mx-8">
+
+            <div class="relative w-full">
+
+                <input id="searchInput"
+                       type="text"
+                       placeholder="Search products, markets, accessories..."
+                       class="w-full bg-slate-100 text-sm pl-4 pr-10 py-2 rounded-full border border-transparent focus:outline-none focus:border-emerald-500 focus:bg-white transition-all">
+
+                <span class="absolute right-3 top-2.5 text-slate-400">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="2"
+                         stroke="currentColor"
+                         class="w-4 h-4">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.603 10.603Z" />
+                    </svg>
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- Right Controls -->
+        <div class="flex items-center gap-2 sm:gap-4 shrink-0 relative ml-auto">
+
+            <!-- Cart Trigger Icon -->
+            <button onclick="handleSidebarToggle('cart')"
+                    class="relative p-2 hover:bg-slate-100 rounded-xl text-slate-700 transition-all cursor-pointer"
+                    aria-label="Open shopping cart">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke-width="2"
+                     stroke="currentColor"
+                     class="w-6 h-6">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                </svg>
+
+                <span class="globalCartBadge absolute top-0.5 right-0.5 bg-rose-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">
+                    0
+                </span>
+
+            </button>
+
+            <!-- TOP RIGHT MENU TRIGGER -->
+            <button id="navMenuToggleBtn"
+                    onclick="handleSidebarToggle('nav')"
+                    class="p-2 hover:bg-slate-100 rounded-xl text-slate-700 transition-all cursor-pointer relative z-50"
+                    aria-label="Toggle navigation menu">
+
+                <svg id="burgerIcon"
+                     xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke-width="2"
+                     stroke="currentColor"
+                     class="w-6 h-6">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+
+                <svg id="closeIcon"
+                     xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke-width="2"
+                     stroke="currentColor"
+                     class="w-6 h-6 hidden">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Nigeria Badge -->
+            <span class="hidden lg:inline-block text-xs font-semibold bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full">
+                🇳🇬 Nigeria Only
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- MOBILE SEARCH BAR -->
+    <div class="md:hidden px-4 pb-3">
+
+        <div class="relative w-full">
+
+            <input id="searchInputMobile"
+                   type="text"
+                   placeholder="Search products, markets, accessories..."
+                   class="w-full bg-slate-100 text-sm pl-4 pr-10 py-3 rounded-full border border-transparent focus:outline-none focus:border-emerald-500 focus:bg-white transition-all">
+
+            <span class="absolute right-3 top-3 text-slate-400">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke-width="2"
+                     stroke="currentColor"
+                     class="w-4 h-4">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.603 10.603Z" />
+                </svg>
+
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+    <!-- SIDEBAR PANEL LAYOUT & BACKDROP OVERLAY -->
+    <div id="sidebarOverlay" onclick="closeSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-45 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    
+    <aside id="sidebar" class="fixed bg-white shadow-2xl p-5 flex-col transition-all duration-300 ease-out top-0 right-0 h-full w-[85%] max-w-sm z-50 transform translate-x-full flex hidden">
+        
+        <!-- Sidebar Header -->
+        <div class="flex justify-between items-center mb-6 pb-2 border-b border-slate-100">
+            <span id="sidebarTitle" class="font-bold text-lg text-slate-800 tracking-tight">Menu Options</span>
+            <button onclick="closeSidebar()" class="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500 transition-all cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+
+        <!-- VIEW A: NAVIGATION MATRIX -->
+        <nav id="sidebarNavView" class="flex flex-col gap-1 text-sm font-medium text-slate-700 overflow-y-auto pb-6">
+            <div class="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Discover Portal</div>
+            
+            <button onclick="navigateToTab('home'); showQuickLoader(); addToCart(1)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer text-left">
+                <span class="text-base">🏠</span> <span>Home Base</span>
+            </button>
+            
+            <button onclick="navigateToTab('categories')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer text-left">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 opacity-80"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" /></svg>
+                <span>Browse Categories</span>
+            </button>
+
+            <button onclick="triggerTrendingDealsOnly()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all cursor-pointer text-left font-semibold">
+                <span class="text-base">📈</span> <span>Trending Deals</span>
+            </button>
+
+            <button onclick="triggerExploreLocationFocus()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer text-left">
+                <span class="text-base">📍</span> <span>Explore Location</span>
+            </button>
+
+            <div class="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-4">Tools & Metrics</div>
+
+            <button onclick="triggerPriceAlertNotify()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer text-left">
+                <span class="text-base">🔔</span> <span>Price Alert</span>
+            </button>
+
+            <button onclick="triggerMarketChartsNotify()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer text-left">
+                <span class="text-base">📊</span> <span>Market Charts Icon</span>
+            </button>
+
+            <button onclick="toggleSidebarTab('cart')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer">
+                <span class="text-base">🛒</span> <span>Shopping Cart Container</span>
+                <span id="sidebarMenuBadge" class="ml-auto bg-rose-500 text-white font-bold px-2 py-0.5 rounded-full text-[10px] hidden">0</span>
+            </button>
+
+            <div class="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-4">Merchant Corridor</div>
+
+            <button onclick="triggerPartnerVendorNotify()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-900 text-white hover:bg-emerald-600 transition-all cursor-pointer text-left shadow-sm mt-1">
+                <span class="text-base">🤝</span> <span>Become a Partner Vendor</span>
+            </button>
+        </nav>
+
+        <!-- VIEW B: CART AREA (RE-ENGINEERED CONTAINER) -->
+        <div id="sidebarCartView" class="hidden flex-1 flex-col overflow-hidden">
+            <!-- Continuous item rows are stacked here directly -->
+            <div id="sidebarCartItems" class="flex-1 overflow-y-auto space-y-3 pr-1 text-sm text-slate-500">
+                <p id="emptyCartMessage" class="text-center py-6">Your cart is currently empty.</p>
+            </div>
+
+<!-- LIVE CART CHART -->
+<div id="cartChartContainer" class="hidden mb-4 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-bold text-slate-800">
+            Cart Analytics
+        </h3>
+
+        <span id="chartTotalProducts"
+              class="text-xs font-semibold bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">
+            0 Products
+        </span>
+    </div>
+
+    <div id="cartChartBars"
+         class="flex items-end gap-2 h-40 overflow-x-auto pb-2">
+
+    </div>
+
+</div>
+
+<!-- Global summary values calculation panel -->
+<div id="checkoutPanel" class="pt-4 border-t border-slate-100 mt-4 hidden">
+
+    <div class="flex justify-between text-xs text-slate-500 mb-1">
+        <span>Total Items Selected:</span>
+
+        <span id="cartTotalItemsCount"
+              class="font-semibold text-slate-800">
+            0 units
+        </span>
+    </div>
+
+    <div class="flex justify-between font-bold text-slate-900 mb-4 text-sm">
+        <span>Total Sum:</span>
+
+        <span id="cartTotalPrice"
+              class="text-emerald-600">
+            ₦0
+        </span>
+    </div>
+
+    <a href="https://www.jumia.com.ng"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="w-full bg-[#f68b1e] hover:bg-[#e07e1b] text-white font-bold py-3 px-4 rounded-xl text-center flex items-center justify-center gap-2 transition-colors cursor-pointer text-sm shadow-xs">
+
+        <span>Checkout on Jumia</span>
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke-width="2"
+             stroke="currentColor"
+             class="w-4 h-4">
+
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+
+    </a>
+
+</div>
+
+
+            <button onclick="toggleSidebarTab('nav')" class="mt-4 text-xs font-medium text-emerald-600 hover:underline flex items-center justify-center gap-1 cursor-pointer pb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+                <span>Back to Main Menu</span>
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- UNIVERSAL BOTTOM NAVIGATION BAR -->
+    <div id="bottomNavigationBar" class="fixed bottom-0 left-0 right-0 bg-white/95 border-t border-slate-200 z-30 px-6 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] flex justify-around items-center w-full transition-all">
+        <button id="tab-home" onclick="navigateToTab('home')" class="flex flex-col items-center gap-1 px-4 py-1 rounded-xl transition-all cursor-pointer text-emerald-600 bg-emerald-50">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+            <span class="text-[11px] font-bold">Home</span>
+        </button>
+
+        <button id="tab-categories" onclick="navigateToTab('categories'); showQuickLoader(); addToCart(1)" class="flex flex-col items-center gap-1 px-4 py-1 rounded-xl text-slate-600 hover:text-emerald-600 hover:bg-emerald-50/50 transition-all cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" /></svg>
+            <span class="text-[11px] font-bold">Categories</span>
+        </button>
+
+        <button id="tab-cart" onclick="handleSidebarToggle('cart')" class="relative flex flex-col items-center gap-1 px-4 py-1 rounded-xl text-slate-600 hover:text-emerald-600 hover:bg-emerald-50/50 transition-all cursor-pointer">
+            <div class="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" /></svg>
+                <span class="globalCartBadge absolute -top-2 -right-2 bg-rose-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+            </div>
+            <span class="text-[11px] font-bold">Cart</span>
+        </button>
+    </div>
+
+    <!-- MAIN VIEWS CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- VIEW 1: HOME PAGE -->
+        <div id="homePageLayout" class="view-panel">
+            <div id="mainBannerBlock" class="bg-gradient-to-br from-slate-900 to-emerald-950 text-white rounded-3xl p-6 sm:p-10 shadow-xl mb-10 relative overflow-hidden">
+                <div class="relative z-10 max-w-xl">
+                    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-3">Find exact items, cheapest prices, closest locations.</h1>
+                    <p class="text-slate-300 text-sm sm:text-base mb-6">No more overpaying. Compare real-time market prices across structural hubs and retail shops in Nigeria.</p>
+                    
+                    <div class="flex flex-wrap gap-2 items-center">
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mr-2">Popular Cities:</span>
+                        <button onclick="selectQuickState('Lagos')" class="bg-white/10 hover:bg-white/20 px-3 py-1 text-xs rounded-full transition-all border border-white/10 cursor-pointer">Lagos (Ikeja)</button>
+                        <button onclick="selectQuickState('FCT')" class="bg-white/10 hover:bg-white/20 px-3 py-1 text-xs rounded-full transition-all border border-white/10 cursor-pointer">Abuja (Wuse)</button>
+                        <button onclick="selectQuickState('Rivers')" class="bg-white/10 hover:bg-white/20 px-3 py-1 text-xs rounded-full transition-all border border-white/10 cursor-pointer">Port Harcourt</button>
+                        <button onclick="selectQuickState('Anambra')" class="bg-white/10 hover:bg-white/20 px-3 py-1 text-xs rounded-full transition-all border border-white/10 cursor-pointer">Onitsha</button>
+                    </div>
+                </div>
+                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl"></div>
+            </div>
+<!-- FEATURED SLIDING BANNERS -->
+<div class="relative mb-10 overflow-hidden rounded-3xl">
+
+    <!-- SLIDER WRAPPER -->
+    <div id="promoSlider"
+         class="flex transition-transform duration-700 ease-in-out">
+
+        <!-- SLIDE 1 -->
+        <div onclick="selectCategoryHub('Local Market')"
+             class="min-w-full relative h-[220px] sm:h-[280px] cursor-pointer overflow-hidden">
+
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1600&auto=format&fit=crop"
+                 class="w-full h-full object-cover">
+
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/20"></div>
+
+            <div class="absolute left-6 bottom-6 text-white max-w-md">
+                <span class="bg-emerald-500 text-xs px-3 py-1 rounded-full font-bold">
+                    MARKET DEALS
+                </span>
+
+                <h2 class="text-2xl sm:text-4xl font-extrabold mt-3 leading-tight">
+                    Cheapest Local Market Prices
+                </h2>
+
+                <p class="text-sm text-slate-200 mt-2">
+                    Compare live rice, beans, fish and foodstuff prices.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div onclick="selectCategoryHub('Restaurant')"
+             class="min-w-full relative h-[220px] sm:h-[280px] cursor-pointer overflow-hidden">
+
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop"
+                 class="w-full h-full object-cover">
+
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/20"></div>
+
+            <div class="absolute left-6 bottom-6 text-white max-w-md">
+                <span class="bg-amber-500 text-xs px-3 py-1 rounded-full font-bold">
+                    FOOD HUB
+                </span>
+
+                <h2 class="text-2xl sm:text-4xl font-extrabold mt-3 leading-tight">
+                    Best Restaurant Meals Nearby
+                </h2>
+
+                <p class="text-sm text-slate-200 mt-2">
+                    Discover platters, jollof rice and local dishes instantly.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div onclick="selectCategoryHub('Hotel')"
+             class="min-w-full relative h-[220px] sm:h-[280px] cursor-pointer overflow-hidden">
+
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1600&auto=format&fit=crop"
+                 class="w-full h-full object-cover">
+
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/20"></div>
+
+            <div class="absolute left-6 bottom-6 text-white max-w-md">
+                <span class="bg-blue-500 text-xs px-3 py-1 rounded-full font-bold">
+                    HOTEL SUITES
+                </span>
+
+                <h2 class="text-2xl sm:text-4xl font-extrabold mt-3 leading-tight">
+                    Affordable Luxury Stays
+                </h2>
+
+                <p class="text-sm text-slate-200 mt-2">
+                    Compare room rates and luxury suites across Nigeria.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div onclick="triggerTrendingDealsOnly()"
+             class="min-w-full relative h-[220px] sm:h-[280px] cursor-pointer overflow-hidden">
+
+            <img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=1600&auto=format&fit=crop"
+                 class="w-full h-full object-cover">
+
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/20"></div>
+
+            <div class="absolute left-6 bottom-6 text-white max-w-md">
+                <span class="bg-rose-500 text-xs px-3 py-1 rounded-full font-bold animate-pulse">
+                    TRENDING NOW
+                </span>
+
+                <h2 class="text-2xl sm:text-4xl font-extrabold mt-3 leading-tight">
+                    Hot Products Nigerians Buy Most
+                </h2>
+
+                <p class="text-sm text-slate-200 mt-2">
+                    Discover fast-rising market trends and live prices.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- DOTS -->
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+
+        <button class="sliderDot w-2.5 h-2.5 rounded-full bg-white/70"></button>
+
+        <button class="sliderDot w-2.5 h-2.5 rounded-full bg-white/40"></button>
+
+        <button class="sliderDot w-2.5 h-2.5 rounded-full bg-white/40"></button>
+
+        <button class="sliderDot w-2.5 h-2.5 rounded-full bg-white/40"></button>
+
+    </div>
+
+</div>
+
+<script>
+
+let currentPromoSlide = 0;
+
+const promoSlider =
+    document.getElementById("promoSlider");
+
+const sliderDots =
+    document.querySelectorAll(".sliderDot");
+
+const totalSlides = 4;
+
+function updatePromoSlider() {
+
+    promoSlider.style.transform =
+        `translateX(-${currentPromoSlide * 100}%)`;
+
+    sliderDots.forEach((dot, index) => {
+
+        if (index === currentPromoSlide) {
+
+            dot.classList.remove("bg-white/40");
+
+            dot.classList.add("bg-white/90");
+
+        } else {
+
+            dot.classList.remove("bg-white/90");
+
+            dot.classList.add("bg-white/40");
+
+        }
+
+    });
+
+}
+
+// AUTO SLIDE
+setInterval(() => {
+
+    currentPromoSlide++;
+
+    if (currentPromoSlide >= totalSlides) {
+
+        currentPromoSlide = 0;
+
+    }
+
+    updatePromoSlider();
+
+}, 4000);
+
+
+// CLICK DOTS
+sliderDots.forEach((dot, index) => {
+
+    dot.addEventListener("click", () => {
+
+        currentPromoSlide = index;
+
+        updatePromoSlider();
+
+    });
+
+});
+
+</script>
+            <!-- CONTROLS & FILTER HUB INDEX -->
+            <div id="filterSectionHub" class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 scroll-mt-24">
+                <div>
+                    <h2 id="hubTitleHeader" class="text-xl font-bold text-slate-900">Live Item Price Indexes</h2>
+                    <p class="text-xs text-slate-500">Real-time localized indices across structural trade corridors</p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full md:w-auto">
+                    <select id="stateFilter" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 shadow-xs focus:outline-none focus:border-emerald-500 cursor-pointer">
+                        <option value="all">City</option>
+                        <option value="Abia">Abia</option><option value="Lagos">Lagos</option><option value="FCT">FCT Abuja</option><option value="Rivers">Rivers</option><option value="Anambra">Anambra</option>
+                    </select>
+
+                    <select id="categoryFilter" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 shadow-xs focus:outline-none focus:border-emerald-500 cursor-pointer">
+                        <option value="all">All General Categories</option>
+                        <option value="Foodstuffs">Foodstuffs & Provisions</option>
+                        <option value="Building Materials">Building Materials</option>
+                    </select>
+
+                    <select id="structuralFilter" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 shadow-xs focus:outline-none focus:border-emerald-500 cursor-pointer">
+                        <option value="all">All Hub Layouts</option>
+                        <option value="Local Market">Local Market</option>
+                        <option value="Restaurant">Restaurant</option>
+                        <option value="Hotel">Hotel</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- PRODUCT GRID CONTAINER -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        </div>
+
+        <!-- VIEW 2: SEPARATE CATEGORIES HUB PAGE -->
+        <div id="categoriesPageLayout" class="view-panel hidden min-h-[60vh]">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-4 mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Explore Hub Classifications</h2>
+                    <p class="text-sm text-slate-500">Select structured trade networks to dynamically look up prices</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Local Market Classification -->
+                <div onclick="selectCategoryHub('Local Market'); showQuickLoader(); addToCart(1)" class="category-card relative overflow-hidden rounded-2xl border border-slate-100 bg-emerald-900 text-white p-6 shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-44">
+                    <div class="animated-bg absolute inset-0 bg-gradient-to-br from-emerald-800 to-teal-950 opacity-90 transition-transform duration-500 ease-out"></div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <span class="icon-bounce text-4xl transition-transform duration-300">🌾</span>
+                        <span class="text-[10px] font-bold bg-white/20 px-2.5 py-1 rounded-md uppercase tracking-wider">Staples</span>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-bold text-lg leading-none">Local Market</h3>
+                        <p class="text-xs text-emerald-200/90 mt-1.5">Rice, Beans, Fresh Seafood rates...</p>
+                    </div>
+                </div>
+
+                <!-- Restaurant Classification -->
+                <div onclick="selectCategoryHub('Restaurant'); showQuickLoader(); addToCart(1)" class="category-card relative overflow-hidden rounded-2xl border border-slate-100 bg-amber-900 text-white p-6 shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-44">
+                    <div class="animated-bg absolute inset-0 bg-gradient-to-br from-amber-800 to-orange-950 opacity-90 transition-transform duration-500 ease-out"></div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <span class="icon-bounce text-4xl transition-transform duration-300">🍗</span>
+                        <span class="text-[10px] font-bold bg-white/20 px-2.5 py-1 rounded-md uppercase tracking-wider">Ready Meals</span>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-bold text-lg leading-none">Restaurant</h3>
+                        <p class="text-xs text-amber-200/90 mt-1.5">Platters, local cooked cuisines...</p>
+                    </div>
+                </div>
+
+                <!-- Hotel Lodging Classification -->
+                <div onclick="selectCategoryHub('Hotel'); showQuickLoader(); addToCart(1)" class="category-card relative overflow-hidden rounded-2xl border border-slate-100 bg-blue-900 text-white p-6 shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-44">
+                    <div class="animated-bg absolute inset-0 bg-gradient-to-br from-blue-800 to-indigo-950 opacity-90 transition-transform duration-500 ease-out"></div>
+                    <div class="relative z-10 flex justify-between items-start">
+                        <span class="icon-bounce text-4xl transition-transform duration-300">🏨</span>
+                        <span class="text-[10px] font-bold bg-white/20 px-2.5 py-1 rounded-md uppercase tracking-wider">Lodging</span>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="font-bold text-lg leading-none">Hotel Suites</h3>
+                        <p class="text-xs text-blue-200/90 mt-1.5">Luxury rooms, overnight tariffs...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-100 mt-16 py-8 text-center text-sm text-slate-500">
+        <p>&copy; 2026 Pricepadi. Tracking active local market indices across structural zones in Nigeria.</p>
+    </footer>
+
+    <script>
+        // Core Array Source Data
+        const productDataArray = [
+            { id: 1, name: "Local Market Rice (50kg Bag) - De-Stoned", price: 78000, category: "Foodstuffs", structuralType: "Local Market", state: "Lagos", location: "Daleko Market, Mushin", tag: "Staple", trending: true },
+            { id: 2, name: "Brown Beans (Oloyin Paint Bucket)", price: 4500, category: "Foodstuffs", structuralType: "Local Market", state: "Lagos", location: "Bodija Market, Ibadan", tag: "Staple", trending: true },
+            { id: 3, name: "Fresh Catfish (Per Kg Single Cut)", price: 3800, category: "Foodstuffs", structuralType: "Local Market", state: "Rivers", location: "Oil Mill Market, Port Harcourt", tag: "Staple", trending: false },
+            { id: 4, name: "Dangote Cement (50kg Single Bag)", price: 7300, category: "Building Materials", structuralType: "Local Market", state: "Abia", location: "Ariaria Int'l Market, Aba", tag: "Verified", trending: true },
+            { id: 6, name: "Jollof Rice with Fried Chicken Platter", price: 6500, category: "Foodstuffs", structuralType: "Restaurant", state: "Anambra", location: "Upper Iweka Hub, Onitsha", tag: "Food Menu", trending: false },
+            { id: 7, name: "Standard Luxury Suite Stay (Per Night)", price: 45000, category: "Building Materials", structuralType: "Hotel", state: "Abia", location: "Eket City Center Hub", tag: "Lodging", trending: false }
+        ];
+
+        // Global Cart Memory Object Engine
+        let cartMemory = {};
+        let isSidebarCurrentlyOpen = false;
+        let showTrendingOnlyMode = false;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderAppGrid(productDataArray);
+            initCoreListeners();
+        });
+
+        function initCoreListeners() {
+            document.getElementById('searchInput').addEventListener('input', () => { showTrendingOnlyMode = false; executeAppFilters(); });
+            document.getElementById('stateFilter').addEventListener('change', () => { showTrendingOnlyMode = false; executeAppFilters(); });
+            document.getElementById('categoryFilter').addEventListener('change', () => { showTrendingOnlyMode = false; executeAppFilters(); });
+            document.getElementById('structuralFilter').addEventListener('change', () => { showTrendingOnlyMode = false; executeAppFilters(); });
+        }
+
+        function executeAppFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const stateFilter = document.getElementById('stateFilter').value;
+            const catFilter = document.getElementById('categoryFilter').value;
+            const structFilter = document.getElementById('structuralFilter').value;
+            const headerTitle = document.getElementById('hubTitleHeader');
+
+            if (showTrendingOnlyMode) {
+                headerTitle.innerHTML = '📈 Real Nigeria Trending Products';
+            } else {
+                headerTitle.innerHTML = 'Live Item Price Indexes';
+            }
+
+            const filteredData = productDataArray.filter(product => {
+                if (showTrendingOnlyMode && !product.trending) return false;
+                
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || product.location.toLowerCase().includes(searchTerm);
+                const matchesState = stateFilter === 'all' || product.state === stateFilter;
+                const matchesCat = catFilter === 'all' || product.category === catFilter;
+                const matchesStruct = structFilter === 'all' || product.structuralType === structFilter;
+                
+                return matchesSearch && matchesState && matchesCat && matchesStruct;
+            });
+
+            renderAppGrid(filteredData);
+        }
+
+        function resetAllFilters() {
+            showTrendingOnlyMode = false;
+            document.getElementById('searchInput').value = '';
+            document.getElementById('stateFilter').value = 'all';
+            document.getElementById('categoryFilter').value = 'all';
+            document.getElementById('structuralFilter').value = 'all';
+            navigateToTab('home');
+            executeAppFilters();
+        }
+
+        function navigateToTab(tabId) {
+            const homePage = document.getElementById('homePageLayout');
+            const catPage = document.getElementById('categoriesPageLayout');
+            
+            const btnHome = document.getElementById('tab-home');
+            const btnCat = document.getElementById('tab-categories');
+
+            [btnHome, btnCat].forEach(btn => {
+                btn.classList.remove('text-emerald-600', 'bg-emerald-50');
+                btn.classList.add('text-slate-600');
+            });
+
+            if (tabId === 'home') {
+                homePage.classList.remove('hidden');
+                catPage.classList.add('hidden');
+                btnHome.classList.add('text-emerald-600', 'bg-emerald-50');
+                btnHome.classList.remove('text-slate-600');
+            } else if (tabId === 'categories') {
+                homePage.classList.add('hidden');
+                catPage.classList.remove('hidden');
+                btnCat.classList.add('text-emerald-600', 'bg-emerald-50');
+                btnCat.classList.remove('text-slate-600');
+            }
+            closeSidebar();
+        }
+
+        function selectQuickState(state) {
+            showTrendingOnlyMode = false;
+            document.getElementById('stateFilter').value = state;
+            navigateToTab('home');
+            executeAppFilters();
+            document.getElementById('filterSectionHub').scrollIntoView({ behavior: 'smooth' });
+        }
+
+function selectCategoryHub(hub) {
+window.currentCategoryHub = hub;
+    showTrendingOnlyMode = false;
+
+    // SAVE CURRENT CATEGORY
+    window.currentCategoryHub = hub;
+
+    navigateToTab('categories');
+
+    // HIDE CATEGORY CARDS
+    const categoryCardsGrid =
+        document.querySelector(
+            '#categoriesPageLayout .grid'
+        );
+
+    if (categoryCardsGrid) {
+        categoryCardsGrid.classList.add("hidden");
+    }
+
+    // CREATE PRODUCT AREA IF NOT EXIST
+    let existingArea =
+        document.getElementById("categoryProductsWrapper");
+
+    if (!existingArea) {
+
+        const categoriesPage =
+            document.getElementById("categoriesPageLayout");
+
+        const html = `
+
+            <div id="categoryProductsWrapper"
+                 class="mt-8">
+
+                <!-- TOP BAR -->
+                <div class="flex flex-col lg:flex-row gap-3 mb-6">
+
+                    <!-- BACK BUTTON -->
+                    <button
+                        onclick="showCategoryCardsAgain(); showQuickLoader(); addToCart(1)"
+    
+                        class="bg-slate-100 hover:bg-slate-200 px-4 py-3 rounded-xl text-sm font-semibold">
+
+                        ← Back Categories
+
+                    </button>
+
+                    <!-- SEARCH -->
+                    <div class="relative flex-1">
+
+                        <input
+                            id="categorySearchInput"
+                            type="text"
+                            placeholder="Search products..."
+                            class="w-full bg-slate-100 border border-transparent focus:border-emerald-500 focus:bg-white rounded-xl px-4 py-3 text-sm outline-none"
+                        />
+
+                    </div>
+
+                    <!-- PRICE SORT -->
+                    <select
+                        id="priceSortFilter"
+                        class="bg-slate-100 rounded-xl px-4 py-3 text-sm outline-none">
+
+                        <option value="recommended">
+                            Recommended Price
+                        </option>
+
+                        <option value="high">
+                            Highest Price
+                        </option>
+
+                        <option value="low">
+                            Lowest Price
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <!-- PRODUCTS -->
+                <div id="categoryProductsArea"
+                     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                </div>
+
+            </div>
+
+        `;
+
+        categoriesPage.insertAdjacentHTML(
+            "beforeend",
+            html
+        );
+
+    } else {
+
+        existingArea.classList.remove("hidden");
+
+    }
+
+function renderCategoryProducts(hub) {
+
+    const productContainer =
+        document.getElementById("categoryProductsArea");
+
+    const searchTerm =
+        document.getElementById("categorySearchInput")
+        ?.value
+        .toLowerCase() || "";
+
+    const priceSort =
+        document.getElementById("priceSortFilter")
+        ?.value || "recommended";
+
+    let filteredProducts =
+        productDataArray.filter(product => {
+
+            return (
+                product.structuralType === hub &&
+                (
+                    product.name.toLowerCase().includes(searchTerm)
+                    ||
+                    product.location.toLowerCase().includes(searchTerm)
+                )
+            );
+
+        });
+
+    // SORTING
+    if (priceSort === "high") {
+
+        filteredProducts.sort(
+            (a, b) => b.price - a.price
+        );
+
+    } else if (priceSort === "low") {
+
+        filteredProducts.sort(
+            (a, b) => a.price - b.price
+        );
+
+    }
+
+    // EMPTY
+    if (filteredProducts.length === 0) {
+
+        productContainer.innerHTML = `
+
+            <div class="col-span-full text-center py-12">
+
+                <h3 class="font-bold text-slate-700 mb-2">
+                    No products found
+                </h3>
+
+                <p class="text-sm text-slate-500">
+                    Try another keyword
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+    // PRODUCTS
+    productContainer.innerHTML =
+        filteredProducts.map(product => {
+
+            const quantity =
+                cartMemory[product.id]?.quantity || 0;
+
+            return `
+
+            <div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+
+                <div>
+
+                    <div class="bg-slate-100 aspect-square w-full rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
+
+                        <div class="flex flex-col items-center justify-center w-full h-full text-slate-400/70 p-4 border border-dashed border-slate-200 rounded-xl">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke-width="1.2"
+                                 stroke="currentColor"
+                                 class="w-12 h-12 text-slate-300 mb-1">
+
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Z" />
+
+                            </svg>
+
+                        </div>
+
+                        <span class="absolute top-2 left-2 text-[9px] font-bold uppercase ${product.trending ? 'bg-amber-500 text-white animate-pulse' : 'bg-slate-900 text-white'} px-2 py-0.5 rounded-md">
+
+                            ${product.trending ? '🔥 Trending' : product.tag}
+
+                        </span>
+
+                        <span class="absolute top-2 right-2 text-[9px] font-bold bg-emerald-600 text-white px-1.5 py-0.5 rounded-md shadow-xs">
+
+                            ${product.state}
+
+                        </span>
+
+                    </div>
+
+                    <div class="flex items-center gap-1.5">
+
+                        <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
+
+                            ${product.category}
+
+                        </span>
+
+                        <span class="text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-md">
+
+                            ${product.structuralType}
+
+                        </span>
+
+                    </div>
+
+                    <h3 class="font-bold text-slate-800 mt-2 group-hover:text-emerald-600 transition-colors text-sm leading-tight">
+
+                        ${product.name}
+
+                    </h3>
+
+                </div>
+
+                <div class="mt-4">
+
+                    <div class="flex items-baseline gap-1">
+
+                        <span class="text-lg font-bold text-slate-900">
+
+                            ₦${product.price.toLocaleString()}
+
+                        </span>
+
+                    </div>
+
+                    <div class="flex items-center gap-1 text-slate-500 text-[11px] mt-1.5 pt-1.5 border-t border-slate-100">
+
+                        <span class="truncate">
+                            ${product.location}
+                        </span>
+
+                    </div>
+
+                    <div class="mt-3">
+
+                        ${
+                            quantity === 0
+                            ?
+                            `
+                            <button
+                                onclick="
+                                    updateItemQuantity(${product.id}, 1);
+                                    renderCategoryProducts('${hub}');
+                                "
+                                class="w-full bg-slate-900 hover:bg-emerald-600 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all">
+
+                                Add to Cart
+
+                            </button>
+                            `
+                            :
+                            `
+                            <div class="flex items-center justify-between w-full bg-slate-100 rounded-xl p-1 border border-slate-200/50">
+
+                                <button
+                                    onclick="
+                                        updateItemQuantity(${product.id}, -1);
+                                        renderCategoryProducts('${hub}');
+                                    "
+                                    class="w-8 h-8 rounded-lg bg-white font-bold text-slate-700 flex items-center justify-center">
+
+                                    -
+
+                                </button>
+
+                                <span class="text-xs font-bold text-slate-900">
+
+                                    ${quantity}
+
+                                </span>
+
+                                <button
+                                    onclick="
+                                        updateItemQuantity(${product.id}, 1);
+                                        renderCategoryProducts('${hub}');
+                                    "
+                                    class="w-8 h-8 rounded-lg bg-white font-bold text-slate-700 flex items-center justify-center">
+
+                                    +
+
+                                </button>
+
+                            </div>
+                            `
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+
+    // LIVE SEARCH
+    document
+        .getElementById("categorySearchInput")
+        .oninput = () => {
+
+            renderCategoryProducts(window.currentCategoryHub);
+
+        };
+
+    // PRICE FILTER
+    document
+        .getElementById("priceSortFilter")
+        .onchange = () => {
+
+            renderCategoryProducts(window.currentCategoryHub);
+
+        };
+
+    // INITIAL LOAD
+    renderCategoryProducts(hub);
+
+}
+
+
+function showCategoryCardsAgain() {
+
+    const categoryCardsGrid =
+        document.querySelector(
+            '#categoriesPageLayout .grid'
+        );
+
+    const wrapper =
+        document.getElementById(
+            "categoryProductsWrapper"
+        );
+
+    if (categoryCardsGrid) {
+        categoryCardsGrid.classList.remove("hidden");
+    }
+
+    if (wrapper) {
+        wrapper.classList.add("hidden");
+    }
+
+}
+        function triggerTrendingDealsOnly() {
+            showTrendingOnlyMode = true;
+            document.getElementById('stateFilter').value = 'all';
+            document.getElementById('categoryFilter').value = 'all';
+            document.getElementById('structuralFilter').value = 'all';
+            
+            navigateToTab('home');
+            executeAppFilters();
+            
+            closeSidebar();
+            setTimeout(() => {
+                document.getElementById('filterSectionHub').scrollIntoView({ behavior: 'smooth' });
+            }, 350);
+        }
+
+        function triggerExploreLocationFocus() {
+            closeSidebar();
+            navigateToTab('home');
+            setTimeout(() => {
+                const element = document.getElementById('stateFilter');
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                element.classList.add('ring-2', 'ring-emerald-500');
+                setTimeout(() => element.classList.remove('ring-2', 'ring-emerald-500'), 1500);
+            }, 350);
+        }
+
+        function triggerPriceAlertNotify() {
+            alert("🔔 Price Alert Activated: You will be notified instantly when product indexes shift across your saved locations.");
+        }
+
+        function triggerMarketChartsNotify() {
+            alert("📊 Data Hub: Market indexing charts are updating live with week-over-week analytical trends.");
+        }
+
+        function triggerPartnerVendorNotify() {
+            alert("🤝 Welcome to Merchant Hub: Redirecting to verification portal for retail and structural trade documentation.");
+        }
+
+        // --- SIDEBAR ARCHITECTURE CONTROLS ---
+        function handleSidebarToggle(viewMode) {
+            if (isSidebarCurrentlyOpen) {
+                closeSidebar();
+            } else {
+                openSidebar(viewMode);
+            }
+        }
+
+        function openSidebar(viewMode) {
+            isSidebarCurrentlyOpen = true;
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const burgerIcon = document.getElementById('burgerIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            
+            burgerIcon.classList.add('hidden');
+            closeIcon.classList.remove('hidden');
+
+            sidebar.classList.remove('hidden');
+            setTimeout(() => {
+                sidebar.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+            }, 10);
+            
+            toggleSidebarTab(viewMode);
+        }
+
+        function closeSidebar() {
+            if (!isSidebarCurrentlyOpen) return;
+            isSidebarCurrentlyOpen = false;
+            
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const burgerIcon = document.getElementById('burgerIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            
+            closeIcon.classList.add('hidden');
+            burgerIcon.classList.remove('hidden');
+            
+            sidebar.classList.add('translate-x-full');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                sidebar.classList.add('hidden');
+            }, 300);
+        }
+
+        function toggleSidebarTab(viewMode) {
+            const navView = document.getElementById('sidebarNavView');
+            const cartView = document.getElementById('sidebarCartView');
+            const title = document.getElementById('sidebarTitle');
+
+            if(!isSidebarCurrentlyOpen) {
+                openSidebar(viewMode);
+            }
+
+            if (viewMode === 'cart') {
+                navView.classList.add('hidden');
+                cartView.classList.remove('hidden');
+                cartView.classList.add('flex');
+                title.textContent = 'Shopping Cart';
+            } else {
+                cartView.classList.add('hidden');
+                cartView.classList.remove('flex');
+                navView.classList.remove('hidden');
+                title.textContent = 'Menu';
+            }
+        }
+
+        // --- PRODUCTION CORE CART STATE ENGINE ---
+        function renderAppGrid(products) {
+            const gridContainer = document.getElementById("productGrid");
+            gridContainer.innerHTML = "";
+
+            if (products.length === 0) {
+                gridContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-slate-400 text-sm font-medium">
+                        No live items found matching these criteria.
+                    </div>`;
+                return;
+            }
+
+            products.forEach(product => {
+                // Read current volume count from state memory
+                const checkedQty = cartMemory[product.id] ? cartMemory[product.id].quantity : 0;
+                const activeCardNode = document.createElement("div");
+                activeCardNode.className = "bg-white border border-slate-100 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between group";
+                
+                activeCardNode.innerHTML = `
+                    <div>
+                        <div class="bg-slate-100 aspect-square w-full rounded-xl mb-4 flex items-center justify-center text-slate-300 relative overflow-hidden">
+                            <div class="flex flex-col items-center justify-center w-full h-full text-slate-400/70 p-4 border border-dashed border-slate-200 rounded-xl">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" class="w-12 h-12 text-slate-300 mb-1"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
+                            </div>
+                            <span class="absolute top-2 left-2 text-[9px] font-bold uppercase ${product.trending ? 'bg-amber-500 text-white animate-pulse' : 'bg-slate-900 text-white'} px-2 py-0.5 rounded-md">${product.trending ? '🔥 Trending' : product.tag}</span>
+                            <span class="absolute top-2 right-2 text-[9px] font-bold bg-emerald-600 text-white px-1.5 py-0.5 rounded-md shadow-xs">${product.state}</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">${product.category}</span>
+                            <span class="text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-md">${product.structuralType}</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 mt-2 group-hover:text-emerald-600 transition-colors text-sm leading-tight">${product.name}</h3>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-lg font-bold text-slate-900">₦${product.price.toLocaleString()}</span>
+                        </div>
+                        <div class="flex items-center gap-1 text-slate-500 text-[11px] mt-1.5 pt-1.5 border-t border-slate-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3 text-rose-500"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
+                            <span class="truncate">${product.location}</span>
+                        </div>
+
+                        <div class="mt-3">
+                            ${checkedQty === 0 ? `
+                                <button onclick="updateItemQuantity(${product.id}, 1)" class="w-full bg-slate-900 hover:bg-emerald-600 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all cursor-pointer flex justify-center items-center gap-1.5 shadow-xs">
+                                    <span>Add to Cart</span>
+                                </button>
+                            ` : `
+                                <div class="flex items-center justify-between w-full bg-slate-100 rounded-xl p-1 border border-slate-200/50">
+                                    <button onclick="updateItemQuantity(${product.id}, -1)" class="w-8 h-8 rounded-lg bg-white shadow-2xs font-bold text-slate-700 flex items-center justify-center hover:bg-rose-50 hover:text-rose-600 cursor-pointer transition-colors text-xs">-</button>
+                                    <span class="text-xs font-bold text-slate-900">${checkedQty}</span>
+                                    <button onclick="updateItemQuantity(${product.id}, 1)" class="w-8 h-8 rounded-lg bg-white shadow-2xs font-bold text-slate-700 flex items-center justify-center hover:bg-emerald-50 hover:text-emerald-600 cursor-pointer transition-colors text-xs">+</button>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+                gridContainer.appendChild(activeCardNode);
+            });
+        }
+
+        
+window.updateItemQuantity = function(id, change) {
+
+    const product =
+        productDataArray.find(
+            item => item.id === id
+        );
+
+    if (!product) return;
+
+    // CREATE ITEM
+    if (!cartMemory[id]) {
+
+        cartMemory[id] = {
+            ...product,
+            quantity: 0
+        };
+
+    }
+
+    // CHANGE QUANTITY
+    cartMemory[id].quantity += change;
+
+    // REMOVE IF ZERO
+    if (cartMemory[id].quantity <= 0) {
+
+        delete cartMemory[id];
+
+    }
+
+    // UPDATE MAIN PRODUCTS
+    executeAppFilters();
+
+    // UPDATE CATEGORY PRODUCTS
+    if (window.currentCategoryHub) {
+
+        renderCategoryProducts(
+            window.currentCategoryHub
+        );
+
+    }
+
+    // UPDATE CART
+    syncSidebarCartView();
+
+}
+
+
+
+
+        window.removeItemCompletely = function(id) {
+            if (cartMemory[id]) {
+                delete cartMemory[id];
+            }
+            syncSystemViews();
+        }
+
+        function syncSystemViews() {
+            executeAppFilters();
+            syncSidebarCartView();
+        }
+
+
+
+// CART + TOTALS
+function syncSidebarCartView() {
+
+    const container =
+        document.getElementById("sidebarCartItems");
+
+    const emptyLabel =
+        document.getElementById("emptyCartMessage");
+
+    const checkoutPanel =
+        document.getElementById("checkoutPanel");
+
+    const menuBadge =
+        document.getElementById("sidebarMenuBadge");
+
+    const totalText =
+        document.getElementById("cartTotalPrice");
+
+    const totalItemsCountLabel =
+        document.getElementById("cartTotalItemsCount");
+
+    const globalCartBadges =
+        document.querySelectorAll(".globalCartBadge");
+
+    const cartItems =
+        Object.values(cartMemory);
+
+    let totalQuantity = 0;
+    let totalPrice = 0;
+
+    container.innerHTML = "";
+
+    // EMPTY CART
+    if (cartItems.length === 0) {
+
+        emptyLabel.classList.remove("hidden");
+
+        checkoutPanel.classList.add("hidden");
+
+        menuBadge.classList.add("hidden");
+
+        globalCartBadges.forEach(badge => {
+
+            badge.classList.add("hidden");
+
+        });
+
+        container.innerHTML = "";
+
+        container.appendChild(emptyLabel);
+
+        totalText.textContent = "₦0";
+
+        totalItemsCountLabel.textContent = "0 items";
+
+        return;
+
+    }
+
+    // SHOW ACTIVE
+    emptyLabel.classList.add("hidden");
+
+    checkoutPanel.classList.remove("hidden");
+
+    // LOOP PRODUCTS
+    cartItems.forEach(item => {
+
+        const subtotal =
+            item.price * item.quantity;
+
+        totalQuantity += item.quantity;
+
+        totalPrice += subtotal;
+
+        const cartRow =
+            document.createElement("div");
+
+        cartRow.className =
+            "bg-slate-50 border border-slate-100 p-3 rounded-xl flex items-start justify-between gap-3";
+
+        cartRow.innerHTML = `
+
+            <div class="flex-1 overflow-hidden">
+
+                <h4 class="font-bold text-slate-800 text-xs leading-tight mb-1">
+
+                    ${item.name}
+
+                </h4>
+
+                <div class="text-[11px] text-slate-500">
+
+                    ₦${item.price.toLocaleString()}
+                    ×
+                    ${item.quantity}
+
+                </div>
+
+                <div class="text-sm font-bold text-emerald-600 mt-1">
+
+                    ₦${subtotal.toLocaleString()}
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col items-end gap-2">
+
+                <div class="flex items-center gap-1 bg-white border border-slate-200 rounded-lg p-1">
+
+                    <button
+                        onclick="updateItemQuantity(${item.id}, -1)"
+                        class="w-6 h-6 rounded-md bg-slate-100 hover:bg-rose-100 text-xs font-bold">
+
+                        -
+
+                    </button>
+
+                    <span class="text-xs font-bold w-5 text-center">
+
+                        ${item.quantity}
+
+                    </span>
+
+                    <button
+                        onclick="updateItemQuantity(${item.id}, 1)"
+                        class="w-6 h-6 rounded-md bg-slate-100 hover:bg-emerald-100 text-xs font-bold">
+
+                        +
+
+                    </button>
+
+                </div>
+
+                <button
+                    onclick="removeItemCompletely(${item.id})"
+                    class="text-[10px] text-rose-500 hover:text-rose-700 font-bold">
+
+                    Remove
+
+                </button>
+
+            </div>
+
+        `;
+
+        container.appendChild(cartRow);
+
+    });
+
+    // TOTALS
+    totalText.textContent =
+        `₦${totalPrice.toLocaleString()}`;
+
+    totalItemsCountLabel.textContent =
+        `${totalQuantity} item${totalQuantity > 1 ? 's' : ''}`;
+
+    // BADGES
+    menuBadge.classList.remove("hidden");
+
+    menuBadge.textContent = totalQuantity;
+
+    globalCartBadges.forEach(badge => {
+
+        badge.classList.remove("hidden");
+
+        badge.textContent = totalQuantity;
+
+    });
+
+}
+        function updateCartChart() {
+
+    const chartContainer =
+        document.getElementById("cartChartContainer");
+
+    const chartBars =
+        document.getElementById("cartChartBars");
+
+    const chartTotalProducts =
+        document.getElementById("chartTotalProducts");
+
+    if (!chartContainer || !chartBars || !chartTotalProducts)
+        return;
+
+    const cartItems = Object.values(cartMemory);
+
+    if (cartItems.length === 0) {
+
+        chartContainer.classList.add("hidden");
+
+        chartBars.innerHTML = "";
+
+        chartTotalProducts.textContent = "0 Products";
+
+        return;
+    }
+
+    chartContainer.classList.remove("hidden");
+
+    chartBars.innerHTML = "";
+
+    let totalProducts = 0;
+
+    cartItems.forEach(item => {
+
+        const quantity = item.quantity || 1;
+
+        totalProducts += quantity;
+
+        const height =
+            Math.min(140, 35 + (quantity * 20));
+
+        const barWrapper = document.createElement("div");
+
+        barWrapper.className =
+            "min-w-[60px] flex flex-col items-center justify-end h-full";
+
+        barWrapper.innerHTML = `
+        
+            <span class="text-[11px] font-bold text-slate-700 mb-1">
+                ${quantity}x
+            </span>
+
+            <div class="w-12 rounded-t-2xl bg-emerald-500 transition-all duration-300"
+                 style="height:${height}px">
+            </div>
+
+            <span class="text-[10px] text-center mt-2 text-slate-600 leading-tight">
+                ${item.name.substring(0, 10)}
+            </span>
+        `;
+
+        chartBars.appendChild(barWrapper);
+
+    });
+
+    chartTotalProducts.textContent =
+        totalProducts + " Products";
+}
+
+
+function refreshCartSummary() {
+
+    let totalItems = 0;
+
+    let totalPrice = 0;
+
+    Object.values(cartMemory).forEach(item => {
+
+        totalItems += item.quantity;
+
+        totalPrice += item.price * item.quantity;
+
+    });
+
+    document.getElementById("cartTotalItemsCount").textContent =
+        totalItems + " units";
+
+    document.getElementById("cartTotalPrice").textContent =
+        "₦" + totalPrice.toLocaleString();
+
+    const checkoutPanel =
+        document.getElementById("checkoutPanel");
+
+    if (totalItems > 0) {
+
+        checkoutPanel.classList.remove("hidden");
+
+    } else {
+
+        checkoutPanel.classList.add("hidden");
+
+    }
+
+    updateCartChart();
+}
+
+
+
+function showCategoryCardsAgain() {
+
+    const cardsGrid =
+        document.querySelector(
+            '#categoriesPageLayout .grid'
+        );
+
+    const wrapper =
+        document.getElementById(
+            "categoryProductsWrapper"
+        );
+
+    if (cardsGrid) {
+        cardsGrid.classList.remove("hidden");
+    }
+
+    if (wrapper) {
+        wrapper.classList.add("hidden");
+    }
+
+}
+    </script>
+    <script>
+
+/* Desktop Search */
+const desktopSearch = document.getElementById("searchInput");
+
+/* Mobile Search */
+const mobileSearch = document.getElementById("searchInputMobile");
+
+/* Sync both search bars */
+function syncSearchInputs(source, target) {
+    source.addEventListener("input", () => {
+        target.value = source.value;
+
+        /* Trigger your existing filtering */
+        const event = new Event("input");
+        target.dispatchEvent(event);
+    });
+}
+
+/* Sync desktop -> mobile */
+if (desktopSearch && mobileSearch) {
+    syncSearchInputs(desktopSearch, mobileSearch);
+
+    /* Sync mobile -> desktop */
+    syncSearchInputs(mobileSearch, desktopSearch);
+}
+
+</script>
+<script>
+
+// PAGE LOAD LOADER
+window.addEventListener("load", () => {
+
+    setTimeout(() => {
+
+        const loader =
+            document.getElementById(
+                "pricepadiLoader"
+            );
+
+        loader.classList.add(
+            "opacity-0",
+            "pointer-events-none"
+        );
+
+        setTimeout(() => {
+
+            loader.style.display = "none";
+
+        }, 500);
+
+    }, 2000);
+
+});
+
+
+// BUTTON CLICK LOADER
+function showQuickLoader() {
+
+    const loader =
+        document.getElementById(
+            "pricepadiLoader"
+        );
+
+    loader.style.display = "flex";
+
+    loader.classList.remove(
+        "opacity-0",
+        "pointer-events-none"
+    );
+
+    setTimeout(() => {
+
+        loader.classList.add(
+            "opacity-0",
+            "pointer-events-none"
+        );
+
+        setTimeout(() => {
+
+            loader.style.display = "none";
+
+        }, 500);
+
+    }, 2000);
+
+}
+
+</script>
+</body>
+</html>
