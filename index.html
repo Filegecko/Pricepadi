@@ -90,6 +90,168 @@
     </div>
 
 </div>
+<!-- FLOATING SELL BUTTON -->
+<div id="floatingSellButton"
+     onclick="toggleVendorPopup(true)"
+     class="fixed right-4 bottom-[20%] z-40 cursor-pointer group">
+
+    <div class="flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 shadow-xl rounded-full px-3 py-2 border border-yellow-200 transition-all duration-300 hover:scale-105 active:scale-95">
+
+        <!-- ICON -->
+        <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm overflow-hidden">
+
+            <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
+                 alt="Market"
+                 class="w-5 h-5 object-contain">
+
+        </div>
+
+        <!-- TEXT -->
+        <span class="text-xs font-extrabold text-slate-800 tracking-wide">
+
+            Start Selling
+
+        </span>
+
+    </div>
+
+</div>
+
+<!-- SELLER POPUP -->
+<div id="vendorPopupOverlay"
+     class="hidden fixed inset-0 z-[999] bg-black/40 backdrop-blur-sm">
+
+    <!-- CLICK OUTSIDE CLOSE -->
+    <div class="absolute inset-0"
+         onclick="toggleVendorPopup(false)">
+    </div>
+
+    <!-- POPUP BOX -->
+    <div class="relative z-10 w-full h-full flex items-center justify-center p-4">
+
+        <div id="vendorPopupBox"
+             class="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl text-center animate-popupScale">
+
+            <!-- CLOSE -->
+            <button onclick="toggleVendorPopup(false)"
+                    class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold flex items-center justify-center">
+
+                ✕
+
+            </button>
+
+            <!-- ICON -->
+            <div class="w-16 h-16 mx-auto rounded-full bg-yellow-100 flex items-center justify-center mb-4">
+
+                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
+                     class="w-8 h-8 object-contain">
+
+            </div>
+
+            <!-- TITLE -->
+            <h2 class="text-xl font-extrabold text-slate-800">
+
+                Start Selling on PricePadi
+
+            </h2>
+
+            <!-- TEXT -->
+            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+
+                Become a verified vendor and start reaching buyers across Nigeria instantly.
+
+            </p>
+
+            <!-- ACTIONS -->
+            <div class="mt-6 flex flex-col gap-3">
+
+                <!-- START -->
+                <a href="https://wa.me/2347032066059?text=Hello,%20I%20want%20to%20start%20selling%20on%20PricePadi"
+                   target="_blank"
+                   onclick="toggleVendorPopup(false)"
+                   class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl transition-all shadow-lg block">
+
+                    Start Selling
+
+                </a>
+
+                <!-- NOT YET -->
+                <button onclick="toggleVendorPopup(false)"
+                        class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 rounded-2xl transition-all">
+
+                    Not Yet
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+@keyframes popupScale {
+
+    0% {
+        transform: scale(.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+}
+
+.animate-popupScale {
+
+    animation: popupScale .25s ease;
+
+}
+
+/* MOBILE SAFE */
+@media(max-width:768px){
+
+    #floatingSellButton{
+
+        bottom: 18%;
+
+    }
+
+}
+
+</style>
+
+<script>
+
+function toggleVendorPopup(show) {
+
+    const popup =
+        document.getElementById("vendorPopupOverlay");
+
+    if (!popup) return;
+
+    if (show) {
+
+        popup.classList.remove("hidden");
+
+        document.body.style.overflow = "hidden";
+
+    } else {
+
+        popup.classList.add("hidden");
+
+        document.body.style.overflow = "";
+
+    }
+
+}
+
+</script>
 <body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col pb-24">
 
     <!-- NAVBAR -->
@@ -276,48 +438,160 @@
         </div>
 
         <!-- VIEW A: NAVIGATION MATRIX -->
-        <nav id="sidebarNavView" class="flex flex-col gap-1 text-sm font-medium text-slate-700 overflow-y-auto pb-6">
-            <div class="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Discover Portal</div>
+<nav id="sidebarNavView" class="relative flex flex-col gap-1 text-sm font-medium text-slate-700 overflow-y-auto pb-6">
+    <div class="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Discover Portal</div>
+    
+    <button onclick="navigateToTab('home'); showQuickLoader(); addToCart(1)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer text-left">
+        <span class="text-base">🏠</span> <span>Home Base</span>
+    </button>
+    
+    <button onclick="navigateToTab('categories')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer text-left">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 opacity-80"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25a2.25 2.25 0 0 1-13.5 18v-2.25Z" /></svg>
+        <span>Browse Categories</span>
+    </button>
+
+    <button onclick="triggerTrendingDealsOnly()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all cursor-pointer text-left font-semibold">
+        <span class="text-base">📈</span> <span>Trending Deals</span>
+    </button>
+
+    <button onclick="triggerExploreLocationFocus()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer text-left">
+        <span class="text-base">📍</span> <span>Explore Location</span>
+    </button>
+
+    <div class="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-4">Tools & Metrics</div>
+
+    <button onclick="triggerPriceAlertNotify()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer text-left">
+        <span class="text-base">🔔</span> <span>Price Alert</span>
+    </button>
+
+    <button onclick="triggerMarketChartsNotify()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer text-left">
+        <span class="text-base">📊</span> <span>Market Charts Icon</span>
+    </button>
+
+    <button onclick="toggleSidebarTab('cart')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer">
+        <span class="text-base">🛒</span> <span>Shopping Cart Container</span>
+        <span id="sidebarMenuBadge" class="ml-auto bg-rose-500 text-white font-bold px-2 py-0.5 rounded-full text-[10px] hidden">0</span>
+    </button>
+
+    <div class="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-4">Merchant Corridor</div>
+
+    <button onclick="toggleVendorPopup(true)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-900 text-white hover:bg-emerald-600 transition-all cursor-pointer text-left shadow-sm mt-1">
+        <span class="text-base">🤝</span> <span>Become a Partner Vendor</span>
+    </button>
+
+    <div id="vendorPopupOverlay" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all duration-300 transparent opacity-0">
+        <div id="vendorPopupBox" class="w-full max-w-sm bg-white rounded-2xl p-6 shadow-xl transform scale-95 opacity-0 transition-all duration-300 text-center border border-slate-100">
+            <div class="text-4xl mb-3">🚀</div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Do you want to start selling on Pricepadi?</h3>
+            <p class="text-sm text-slate-500 mb-6">Join our network of merchant partners and scale up your market reach instantly.</p>
             
-            <button onclick="navigateToTab('home'); showQuickLoader(); addToCart(1)" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer text-left">
-                <span class="text-base">🏠</span> <span>Home Base</span>
-            </button>
-            
-            <button onclick="navigateToTab('categories')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer text-left">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 opacity-80"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" /></svg>
-                <span>Browse Categories</span>
-            </button>
+            <div class="flex flex-col gap-2">
+                <a href="https://wa.me/2347032066059?text=Hello,%20I%20want%20to%20become%20a%20partner%20vendor%20and%20start%20selling%20on%20PricePadi!" target="_blank" onclick="toggleVendorPopup(false)" class="w-full py-3 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 transition-colors shadow-md block text-center no-underline">
+                    Start Selling
+                </a>
+                
+                <button onclick="toggleVendorPopup(false)" class="w-full py-3 bg-slate-100 text-slate-600 font-medium rounded-xl hover:bg-slate-200 transition-colors">
+                    Not yet
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- SIDEBAR FOOTER -->
+<div class="mt-8 border-t border-slate-200 pt-5 px-3">
 
-            <button onclick="triggerTrendingDealsOnly()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-amber-50 hover:text-amber-700 transition-all cursor-pointer text-left font-semibold">
-                <span class="text-base">📈</span> <span>Trending Deals</span>
-            </button>
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
 
-            <button onclick="triggerExploreLocationFocus()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer text-left">
-                <span class="text-base">📍</span> <span>Explore Location</span>
-            </button>
+            <!-- Logo Icon -->
+            <div class="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke-width="2.2"
+                     stroke="currentColor"
+                     class="w-5 h-5 text-white">
 
-            <div class="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-4">Tools & Metrics</div>
+                    <!-- Bar Chart -->
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4 19h16M7 16v-5M12 16V8M17 16v-3" />
 
-            <button onclick="triggerPriceAlertNotify()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer text-left">
-                <span class="text-base">🔔</span> <span>Price Alert</span>
-            </button>
+                    <!-- Upward Trend Line -->
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 13l4-4 3 2 5-5" />
+                </svg>
+            </div>
 
-            <button onclick="triggerMarketChartsNotify()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer text-left">
-                <span class="text-base">📊</span> <span>Market Charts Icon</span>
-            </button>
+            <!-- Logo Area -->
+            <div class="flex items-center gap-3 shrink-0">
+                <span onclick="resetAllFilters()"
+                      class="text-2xl font-bold tracking-tight text-emerald-600 cursor-pointer">
+                    Price<span class="text-slate-900">padi</span>
+                </span>
+            </div>
 
-            <button onclick="toggleSidebarTab('cart')" class="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer">
-                <span class="text-base">🛒</span> <span>Shopping Cart Container</span>
-                <span id="sidebarMenuBadge" class="ml-auto bg-rose-500 text-white font-bold px-2 py-0.5 rounded-full text-[10px] hidden">0</span>
-            </button>
+        </div>
 
-            <div class="px-3 py-1.5 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-4">Merchant Corridor</div>
+    <!-- DESCRIPTION -->
+    <p class="text-[11px] leading-relaxed text-slate-500">
 
-            <button onclick="triggerPartnerVendorNotify()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-900 text-white hover:bg-emerald-600 transition-all cursor-pointer text-left shadow-sm mt-1">
-                <span class="text-base">🤝</span> <span>Become a Partner Vendor</span>
-            </button>
-        </nav>
+        Compare real-time prices across markets,
+        restaurants, hotels and vendors across Nigeria.
 
+    </p>
+
+    <!-- QUICK LINKS -->
+    <div class="mt-4 flex flex-wrap gap-2">
+
+        <button onclick="navigateToTab('home')"
+            class="text-[11px] bg-slate-100 hover:bg-emerald-50 hover:text-emerald-600 px-3 py-1.5 rounded-full transition-all">
+
+            Home
+
+        </button>
+
+
+    </div>
+
+    <!-- COPYRIGHT -->
+    <div class="mt-5 pt-3 border-t border-slate-100">
+
+        <p class="text-[10px] text-slate-400 text-center">
+
+            © 2026 PricePadi. All rights reserved.
+
+        </p>
+
+    </div>
+
+</div>
+</nav>
+
+<script>
+function toggleVendorPopup(show) {
+    const overlay = document.getElementById('vendorPopupOverlay');
+    const box = document.getElementById('vendorPopupBox');
+    
+    if (show) {
+        overlay.classList.remove('hidden');
+        // Small delay ensures transition triggers smoothly right after unhiding
+        setTimeout(() => {
+            overlay.classList.remove('opacity-0');
+            box.classList.remove('scale-95', 'opacity-0');
+            box.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    } else {
+        overlay.classList.add('opacity-0');
+        box.classList.remove('scale-100', 'opacity-100');
+        box.classList.add('scale-95', 'opacity-0');
+        // Hide elements after transitions finish playing
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+        }, 300);
+    }
+}
+</script>
         <!-- VIEW B: CART AREA (RE-ENGINEERED CONTAINER) -->
         <div id="sidebarCartView" class="hidden flex-1 flex-col overflow-hidden">
             <!-- Continuous item rows are stacked here directly -->
@@ -391,10 +665,29 @@
 </div>
 
 
-            <button onclick="toggleSidebarTab('nav')" class="mt-4 text-xs font-medium text-emerald-600 hover:underline flex items-center justify-center gap-1 cursor-pointer pb-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
-                <span>Back to Main Menu</span>
-            </button>
+          <button
+    onclick="
+        closeSidebar();
+        navigateToTab('home');
+    "
+    class="mt-4 text-xs font-medium text-emerald-600 hover:underline flex items-center justify-center gap-1 cursor-pointer pb-2">
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+         fill="none"
+         viewBox="0 0 24 24"
+         stroke-width="2"
+         stroke="currentColor"
+         class="w-3 h-3">
+
+        <path stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+
+    </svg>
+
+    <span>Back to Main Menu</span>
+
+</button>
         </div>
 
     </aside>
@@ -575,6 +868,9 @@ const sliderDots =
 
 const totalSlides = 4;
 
+let promoAutoSlide;
+
+// UPDATE SLIDER
 function updatePromoSlider() {
 
     promoSlider.style.transform =
@@ -600,20 +896,38 @@ function updatePromoSlider() {
 
 }
 
-// AUTO SLIDE
-setInterval(() => {
 
-    currentPromoSlide++;
 
-    if (currentPromoSlide >= totalSlides) {
+// START AUTO SLIDE
+function startPromoAutoSlide() {
 
-        currentPromoSlide = 0;
+    promoAutoSlide = setInterval(() => {
 
-    }
+        currentPromoSlide++;
 
-    updatePromoSlider();
+        if (currentPromoSlide >= totalSlides) {
 
-}, 4000);
+            currentPromoSlide = 0;
+
+        }
+
+        updatePromoSlider();
+
+    }, 4000);
+
+}
+
+
+
+// RESET TIMER
+function resetPromoAutoSlide() {
+
+    clearInterval(promoAutoSlide);
+
+    startPromoAutoSlide();
+
+}
+
 
 
 // CLICK DOTS
@@ -625,9 +939,155 @@ sliderDots.forEach((dot, index) => {
 
         updatePromoSlider();
 
+        resetPromoAutoSlide();
+
     });
 
 });
+
+
+
+// MANUAL SWIPE
+let startX = 0;
+
+let endX = 0;
+
+
+
+promoSlider.addEventListener("touchstart", (e) => {
+
+    startX = e.touches[0].clientX;
+
+});
+
+
+
+promoSlider.addEventListener("touchmove", (e) => {
+
+    endX = e.touches[0].clientX;
+
+});
+
+
+
+promoSlider.addEventListener("touchend", () => {
+
+    const difference = startX - endX;
+
+    // SWIPE LEFT
+    if (difference > 50) {
+
+        currentPromoSlide++;
+
+        if (currentPromoSlide >= totalSlides) {
+
+            currentPromoSlide = 0;
+
+        }
+
+        updatePromoSlider();
+
+    }
+
+    // SWIPE RIGHT
+    else if (difference < -50) {
+
+        currentPromoSlide--;
+
+        if (currentPromoSlide < 0) {
+
+            currentPromoSlide = totalSlides - 1;
+
+        }
+
+        updatePromoSlider();
+
+    }
+
+    resetPromoAutoSlide();
+
+});
+
+
+
+// DESKTOP MOUSE DRAG
+let isDragging = false;
+
+promoSlider.addEventListener("mousedown", (e) => {
+
+    isDragging = true;
+
+    startX = e.clientX;
+
+});
+
+
+
+promoSlider.addEventListener("mousemove", (e) => {
+
+    if (!isDragging) return;
+
+    endX = e.clientX;
+
+});
+
+
+
+promoSlider.addEventListener("mouseup", () => {
+
+    if (!isDragging) return;
+
+    isDragging = false;
+
+    const difference = startX - endX;
+
+    // LEFT
+    if (difference > 50) {
+
+        currentPromoSlide++;
+
+        if (currentPromoSlide >= totalSlides) {
+
+            currentPromoSlide = 0;
+
+        }
+
+    }
+
+    // RIGHT
+    else if (difference < -50) {
+
+        currentPromoSlide--;
+
+        if (currentPromoSlide < 0) {
+
+            currentPromoSlide = totalSlides - 1;
+
+        }
+
+    }
+
+    updatePromoSlider();
+
+    resetPromoAutoSlide();
+
+});
+
+
+
+// PREVENT STUCK DRAG
+promoSlider.addEventListener("mouseleave", () => {
+
+    isDragging = false;
+
+});
+
+
+
+// START
+updatePromoSlider();
+
+startPromoAutoSlide();
 
 </script>
             <!-- CONTROLS & FILTER HUB INDEX -->
@@ -640,7 +1100,43 @@ sliderDots.forEach((dot, index) => {
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full md:w-auto">
                     <select id="stateFilter" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 shadow-xs focus:outline-none focus:border-emerald-500 cursor-pointer">
                         <option value="all">City</option>
-                        <option value="Abia">Abia</option><option value="Lagos">Lagos</option><option value="FCT">FCT Abuja</option><option value="Rivers">Rivers</option><option value="Anambra">Anambra</option>
+                     <option value="Abia">Abia</option>
+<option value="Adamawa">Adamawa</option>
+<option value="Akwa Ibom">Akwa Ibom</option>
+<option value="Anambra">Anambra</option>
+<option value="Bauchi">Bauchi</option>
+<option value="Bayelsa">Bayelsa</option>
+<option value="Benue">Benue</option>
+<option value="Borno">Borno</option>
+<option value="Cross River">Cross River</option>
+<option value="Delta">Delta</option>
+<option value="Ebonyi">Ebonyi</option>
+<option value="Edo">Edo</option>
+<option value="Ekiti">Ekiti</option>
+<option value="Enugu">Enugu</option>
+<option value="FCT">FCT Abuja</option>
+<option value="Gombe">Gombe</option>
+<option value="Imo">Imo</option>
+<option value="Jigawa">Jigawa</option>
+<option value="Kaduna">Kaduna</option>
+<option value="Kano">Kano</option>
+<option value="Katsina">Katsina</option>
+<option value="Kebbi">Kebbi</option>
+<option value="Kogi">Kogi</option>
+<option value="Kwara">Kwara</option>
+<option value="Lagos">Lagos</option>
+<option value="Nasarawa">Nasarawa</option>
+<option value="Niger">Niger</option>
+<option value="Ogun">Ogun</option>
+<option value="Ondo">Ondo</option>
+<option value="Osun">Osun</option>
+<option value="Oyo">Oyo</option>
+<option value="Plateau">Plateau</option>
+<option value="Rivers">Rivers</option>
+<option value="Sokoto">Sokoto</option>
+<option value="Taraba">Taraba</option>
+<option value="Yobe">Yobe</option>
+<option value="Zamfara">Zamfara</option>
                     </select>
 
                     <select id="categoryFilter" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 shadow-xs focus:outline-none focus:border-emerald-500 cursor-pointer">
@@ -718,20 +1214,337 @@ sliderDots.forEach((dot, index) => {
         </div>
     </main>
 
+<!-- QUICK LINKS -->
+
+<!-- CONTACT BUTTON -->
+<div class="w-full flex justify-start relative z-10 -mb-6">
+
+    <button
+        onclick="toggleContactPopup(true)"
+        class="flex items-center gap-2 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-600 px-4 py-3 rounded-2xl text-sm font-semibold transition-all">
+
+        <span>📞</span>
+
+        <span>Contact Us</span>
+
+    </button>
+
+</div>
+
+<!-- CONTACT POPUP -->
+<div id="contactPopupOverlay"
+     class="hidden fixed inset-0 z-[999] bg-black/40 backdrop-blur-sm">
+
+    <!-- BACKDROP -->
+    <div class="absolute inset-0"
+         onclick="toggleContactPopup(false)">
+    </div>
+
+    <!-- POPUP -->
+    <div class="relative z-10 w-full h-full flex items-center justify-center p-4">
+
+        <div class="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl relative animate-popupScale">
+
+            <!-- CLOSE -->
+            <button
+                onclick="toggleContactPopup(false)"
+                class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">
+
+                ✕
+
+            </button>
+
+            <!-- TITLE -->
+            <h2 class="text-xl font-extrabold text-slate-800">
+
+                Contact PricePadi
+
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-2">
+
+                Choose how you want to contact us.
+
+            </p>
+
+            <!-- CONTACT OPTIONS -->
+            <div class="mt-6 flex flex-col gap-4">
+
+                <!-- WHATSAPP -->
+                <a href="https://wa.me/2347032066059"
+                   target="_blank"
+                   class="flex items-center gap-3 bg-emerald-50 hover:bg-emerald-100 px-4 py-4 rounded-2xl transition-all">
+
+                    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+                         class="w-8 h-8 object-contain">
+
+                    <div>
+
+                        <div class="font-bold text-slate-800 text-sm">
+                            WhatsApp Chat
+                        </div>
+
+                        <div class="text-xs text-slate-500">
+                            Fast direct support
+                        </div>
+
+                    </div>
+
+                </a>
+
+                <!-- EMAIL -->
+                <button
+                    onclick="showEmailForm()"
+                    class="flex items-center gap-3 bg-slate-100 hover:bg-slate-200 px-4 py-4 rounded-2xl transition-all text-left">
+
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"
+                         class="w-8 h-8 object-contain">
+
+                    <div>
+
+                        <div class="font-bold text-slate-800 text-sm">
+                            Send Email
+                        </div>
+
+                        <div class="text-xs text-slate-500">
+                            Contact through Gmail
+                        </div>
+
+                    </div>
+
+                </button>
+
+            </div>
+
+            <!-- EMAIL FORM -->
+            <div id="emailContactForm"
+                 class="hidden mt-6 flex flex-col gap-4">
+
+                <input
+                    id="contactName"
+                    type="text"
+                    placeholder="Your Name"
+                    class="w-full bg-slate-100 rounded-2xl px-4 py-3 text-sm outline-none">
+
+                <input
+                    id="contactWhatsapp"
+                    type="text"
+                    placeholder="WhatsApp Number"
+                    class="w-full bg-slate-100 rounded-2xl px-4 py-3 text-sm outline-none">
+
+                <textarea
+                    id="contactMessage"
+                    rows="5"
+                    placeholder="Type your message..."
+                    class="w-full bg-slate-100 rounded-2xl px-4 py-3 text-sm outline-none resize-none"></textarea>
+
+                <button
+                    onclick="sendContactEmail()"
+                    class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl transition-all">
+
+                    Send Email
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+@keyframes popupScale {
+
+    0% {
+        transform: scale(.85);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+}
+
+.animate-popupScale {
+
+    animation: popupScale .25s ease;
+
+}
+
+</style>
+
+<script>
+
+function toggleContactPopup(show) {
+
+    const popup =
+        document.getElementById("contactPopupOverlay");
+
+    if (!popup) return;
+
+    if (show) {
+
+        popup.classList.remove("hidden");
+
+        document.body.style.overflow = "hidden";
+
+    } else {
+
+        popup.classList.add("hidden");
+
+        document.body.style.overflow = "";
+
+    }
+
+}
+
+function showEmailForm() {
+
+    document
+        .getElementById("emailContactForm")
+        .classList.remove("hidden");
+
+}
+
+function sendContactEmail() {
+
+    const name =
+        document.getElementById("contactName").value;
+
+    const whatsapp =
+        document.getElementById("contactWhatsapp").value;
+
+    const message =
+        document.getElementById("contactMessage").value;
+
+    const subject =
+        encodeURIComponent(
+            "PricePadi Contact Message"
+        );
+
+    const body =
+        encodeURIComponent(
+
+`Name: ${name}
+
+WhatsApp: ${whatsapp}
+
+Message:
+${message}`
+
+        );
+
+    window.location.href =
+        `mailto:sickarchitect584@gmail.com?subject=${subject}&body=${body}`;
+
+}
+
+</script>
+
     <!-- FOOTER -->
     <footer class="bg-white border-t border-slate-100 mt-16 py-8 text-center text-sm text-slate-500">
         <p>&copy; 2026 Pricepadi. Tracking active local market indices across structural zones in Nigeria.</p>
     </footer>
 
-    <script>
+<script>
         // Core Array Source Data
         const productDataArray = [
-            { id: 1, name: "Local Market Rice (50kg Bag) - De-Stoned", price: 78000, category: "Foodstuffs", structuralType: "Local Market", state: "Lagos", location: "Daleko Market, Mushin", tag: "Staple", trending: true },
+            { id: 1, name: "Local Market Rice (50kg Bag) - De-Stoned", price: 78000, category: "Foodstuffs", structuralType: "Local Market", state: "Lagos", location: "Daleko Market, Mushin", tag: "Staple", trending: true,
+            sellable: false},
             { id: 2, name: "Brown Beans (Oloyin Paint Bucket)", price: 4500, category: "Foodstuffs", structuralType: "Local Market", state: "Lagos", location: "Bodija Market, Ibadan", tag: "Staple", trending: true },
             { id: 3, name: "Fresh Catfish (Per Kg Single Cut)", price: 3800, category: "Foodstuffs", structuralType: "Local Market", state: "Rivers", location: "Oil Mill Market, Port Harcourt", tag: "Staple", trending: false },
             { id: 4, name: "Dangote Cement (50kg Single Bag)", price: 7300, category: "Building Materials", structuralType: "Local Market", state: "Abia", location: "Ariaria Int'l Market, Aba", tag: "Verified", trending: true },
             { id: 6, name: "Jollof Rice with Fried Chicken Platter", price: 6500, category: "Foodstuffs", structuralType: "Restaurant", state: "Anambra", location: "Upper Iweka Hub, Onitsha", tag: "Food Menu", trending: false },
-            { id: 7, name: "Standard Luxury Suite Stay (Per Night)", price: 45000, category: "Building Materials", structuralType: "Hotel", state: "Abia", location: "Eket City Center Hub", tag: "Lodging", trending: false }
+            { id: 7, name: "Standard Luxury Suite Stay (Per Night)", price: 45000, category: "Building Materials", structuralType: "Hotel", state: "Abia", location: "Eket City Center Hub", tag: "Lodging", trending: false },
+{ id: 8, name: "Frozen Chicken (Whole Pack Medium Size)", price: 12500, category: "Foodstuffs", structuralType: "Local Market", state: "Oyo", location: "Aleshinloye Market, Ibadan", tag: "Protein", trending: true },
+
+{ id: 9, name: "Indomie Noodles Carton (40 Packs)", price: 13500, category: "Foodstuffs", structuralType: "Local Market", state: "Lagos", location: "Oyingbo Market, Lagos", tag: "Fast Food", trending: true },
+
+{ id: 10, name: "Fresh Tilapia Fish (Per Kg)", price: 4200, category: "Foodstuffs", structuralType: "Local Market", state: "Cross River", location: "Marina Market, Calabar", tag: "Seafood", trending: false },
+
+{ id: 11, name: "Egg Tray (30 Pieces)", price: 3200, category: "Foodstuffs", structuralType: "Local Market", state: "Kano", location: "Sabon Gari Market", tag: "Protein", trending: true },
+
+{ id: 12, name: "White Garri (Paint Bucket)", price: 2800, category: "Foodstuffs", structuralType: "Local Market", state: "Ondo", location: "Oja Oba Market, Akure", tag: "Staple", trending: false },
+
+{ id: 13, name: "Frozen Croaker Fish (Medium Size)", price: 9000, category: "Foodstuffs", structuralType: "Local Market", state: "Delta", location: "Warri Main Market", tag: "Seafood", trending: true },
+
+{ id: 14, name: "Palm Kernel Oil (5 Liter Gallon)", price: 11000, category: "Foodstuffs", structuralType: "Local Market", state: "Edo", location: "New Benin Market, Benin City", tag: "Oil", trending: false },
+
+{ id: 15, name: "Groundnut (Paint Bucket)", price: 6000, category: "Foodstuffs", structuralType: "Local Market", state: "Niger", location: "Mokwa Market", tag: "Staple", trending: false },
+
+{ id: 16, name: "Yam Flour (1 Paint Bucket)", price: 5500, category: "Foodstuffs", structuralType: "Local Market", state: "Osun", location: "Odo Ori Market, Ilesa", tag: "Staple", trending: false },
+
+{ id: 17, name: "Goat Meat (Per Kg Fresh Cut)", price: 7500, category: "Foodstuffs", structuralType: "Local Market", state: "Abuja", location: "Garki Modern Market", tag: "Protein", trending: true },
+
+{ id: 18, name: "Fresh Okra Basket", price: 3500, category: "Foodstuffs", structuralType: "Local Market", state: "Ekiti", location: "Ado-Ekiti Central Market", tag: "Vegetable", trending: false },
+
+{ id: 19, name: "Bottled Groundnut Oil (3 Liters)", price: 9800, category: "Foodstuffs", structuralType: "Local Market", state: "Lagos", location: "Mile 12 Market, Ketu", tag: "Cooking Oil", trending: true },
+
+{ id: 20, name: "Sweet Potato (Medium Sack)", price: 7200, category: "Foodstuffs", structuralType: "Local Market", state: "Plateau", location: "Jos Main Market", tag: "Staple", trending: false },
+
+{ id: 21, name: "Smoked Fish Pack (Assorted)", price: 6500, category: "Foodstuffs", structuralType: "Local Market", state: "Bayelsa", location: "Swali Market, Yenagoa", tag: "Seafood", trending: true },
+    { id: 22, name: "Indomie Instant Noodles Carton (40 packs)", price: 12500, category: "Foodstuffs", structuralType: "Supermarket", state: "Lagos", location: "Oyingbo Market, Lagos Island", tag: "Fast Food", trending: true },
+
+    { id: 23, name: "Palm Oil (25 Litres Gallon)", price: 68000, category: "Foodstuffs", structuralType: "Local Market", state: "Delta", location: "Warri Main Market, Warri", tag: "Cooking Oil", trending: true },
+
+    { id: 24, name: "Frozen Chicken (Medium Size Crate)", price: 28500, category: "Foodstuffs", structuralType: "Supermarket", state: "Lagos", location: "Alaba International Market, Ojo", tag: "Protein", trending: true },
+
+    { id: 25, name: "Fresh Tomatoes (Large Basket)", price: 22000, category: "Foodstuffs", structuralType: "Local Market", state: "Kaduna", location: "Kawo Market, Kaduna", tag: "Vegetable", trending: false },
+
+    { id: 26, name: "Garri Ijebu (50kg Bag)", price: 26000, category: "Foodstuffs", structuralType: "Local Market", state: "Ogun", location: "Sango Ota Market", tag: "Staple", trending: true },
+
+    { id: 27, name: "Groundnut (Paint Bucket)", price: 4200, category: "Foodstuffs", structuralType: "Local Market", state: "Niger", location: "Minna Central Market", tag: "Snack", trending: false },
+
+    { id: 28, name: "Live Broiler Chicken (Per Bird)", price: 8500, category: "Foodstuffs", structuralType: "Local Market", state: "Oyo", location: "Bodija Market, Ibadan", tag: "Protein", trending: true },
+
+    { id: 29, name: "Semovita (10kg Bag)", price: 11800, category: "Foodstuffs", structuralType: "Supermarket", state: "Lagos", location: "Shoprite Ikeja City Mall", tag: "Staple", trending: false },
+
+    { id: 30, name: "Fresh Fish (Titus Mackerel Medium)", price: 3200, category: "Foodstuffs", structuralType: "Local Market", state: "Rivers", location: "Mile 1 Market, Port Harcourt", tag: "Seafood", trending: true },
+
+    { id: 31, name: "Rice (50kg Imported Long Grain)", price: 72000, category: "Foodstuffs", structuralType: "Local Market", state: "Lagos", location: "Daleko Market, Mushin", tag: "Staple", trending: true },
+
+    { id: 32, name: "Yam Tubers (Medium Size Bundle)", price: 9500, category: "Foodstuffs", structuralType: "Local Market", state: "Benue", location: "Otukpo Market", tag: "Staple", trending: false },
+
+    { id: 33, name: "Eggs (Crate of 30)", price: 6200, category: "Foodstuffs", structuralType: "Supermarket", state: "Lagos", location: "Mile 12 Market", tag: "Protein", trending: true },
+
+    { id: 34, name: "Pepper (Fresh Rodo Basket)", price: 14500, category: "Foodstuffs", structuralType: "Local Market", state: "Oyo", location: "Oja Oba Market, Ibadan", tag: "Spice", trending: true },
+
+    { id: 35, name: "Beef (1kg Fresh Cut)", price: 7500, category: "Foodstuffs", structuralType: "Butchery", state: "Lagos", location: "Abule Egba Meat Market", tag: "Protein", trending: true },
+
+    { id: 36, name: "Cooking Gas (12.5kg Cylinder Refill)", price: 15200, category: "Utilities", structuralType: "Gas Station", state: "Abuja", location: "Garki Gas Depot", tag: "Energy", trending: true },
+
+    { id: 37, name: "Bread (Large Family Loaf)", price: 1800, category: "Foodstuffs", structuralType: "Bakery", state: "Lagos", location: "Ikeja Local Bakery Hub", tag: "Bakery", trending: false },
+
+    { id: 38, name: "Onions (50kg Bag)", price: 47000, category: "Foodstuffs", structuralType: "Local Market", state: "Sokoto", location: "Sokoto Central Market", tag: "Vegetable", trending: false },
+
+    { id: 39, name: "Rice (5kg Bag Local Parboiled)", price: 6800, category: "Foodstuffs", structuralType: "Supermarket", state: "Enugu", location: "New Market Enugu", tag: "Staple", trending: true },
+
+    { id: 40, name: "Crayfish (Small Bag)", price: 3500, category: "Foodstuffs", structuralType: "Local Market", state: "Akwa Ibom", location: "Uyo Main Market", tag: "Seafood", trending: false },
+
+    { id: 41, name: "Frozen Turkey (Whole Medium)", price: 26500, category: "Foodstuffs", structuralType: "Supermarket", state: "Lagos", location: "Festac Town Market", tag: "Protein", trending: true },
+
+    { id: 42, name: "Cement (Dangote 50kg Bag)", price: 8200, category: "Building Materials", structuralType: "Hardware", state: "Abia", location: "Aba Ariaria Market", tag: "Construction", trending: true },
+
+    { id: 43, name: "Iron Rod (12mm Standard)", price: 4800, category: "Building Materials", structuralType: "Hardware", state: "Lagos", location: "Ijora Steel Market", tag: "Construction", trending: false },
+
+    { id: 44, name: "Pure Water Sachet (Bag of 20)", price: 500, category: "Beverages", structuralType: "Local Market", state: "Lagos", location: "Mushin Wholesale Depot", tag: "Drink", trending: false },
+
+    { id: 45, name: "Soft Drink Crate (Coke/Fanta/Sprite)", price: 7200, category: "Beverages", structuralType: "Supermarket", state: "Rivers", location: "Port Harcourt Mall Depot", tag: "Drink", trending: true },
+
+    { id: 46, name: "Plantain (Large Bunch)", price: 4500, category: "Foodstuffs", structuralType: "Local Market", state: "Ondo", location: "Akure Main Market", tag: "Staple", trending: true },
+
+    { id: 47, name: "Sugar (50kg Bag)", price: 52000, category: "Foodstuffs", structuralType: "Supermarket", state: "Lagos", location: "Apapa Wholesale Market", tag: "Staple", trending: false },
+
+    { id: 48, name: "Cooking Oil (5 Litres Vegetable Oil)", price: 9200, category: "Foodstuffs", structuralType: "Supermarket", state: "Lagos", location: "Surulere Retail Hub", tag: "Cooking Oil", trending: true },
+
+    { id: 49, name: "Okra (Fresh Basket)", price: 3200, category: "Foodstuffs", structuralType: "Local Market", state: "Kano", location: "Sabon Gari Market", tag: "Vegetable", trending: false },
+
+    { id: 50, name: "Frozen Croaker Fish (Per Kg)", price: 5200, category: "Foodstuffs", structuralType: "Local Market", state: "Lagos", location: "Ajah Fish Market", tag: "Seafood", trending: true }
         ];
 
         // Global Cart Memory Object Engine
@@ -822,372 +1635,154 @@ sliderDots.forEach((dot, index) => {
             document.getElementById('filterSectionHub').scrollIntoView({ behavior: 'smooth' });
         }
 
-function selectCategoryHub(hub) {
-window.currentCategoryHub = hub;
-    showTrendingOnlyMode = false;
-
-    // SAVE CURRENT CATEGORY
-    window.currentCategoryHub = hub;
-
-    navigateToTab('categories');
-
-    // HIDE CATEGORY CARDS
-    const categoryCardsGrid =
-        document.querySelector(
-            '#categoriesPageLayout .grid'
-        );
-
-    if (categoryCardsGrid) {
-        categoryCardsGrid.classList.add("hidden");
-    }
-
-    // CREATE PRODUCT AREA IF NOT EXIST
-    let existingArea =
-        document.getElementById("categoryProductsWrapper");
-
-    if (!existingArea) {
-
-        const categoriesPage =
-            document.getElementById("categoriesPageLayout");
-
-        const html = `
-
-            <div id="categoryProductsWrapper"
-                 class="mt-8">
-
-                <!-- TOP BAR -->
-                <div class="flex flex-col lg:flex-row gap-3 mb-6">
-
-                    <!-- BACK BUTTON -->
-                    <button
-                        onclick="showCategoryCardsAgain(); showQuickLoader(); addToCart(1)"
-    
-                        class="bg-slate-100 hover:bg-slate-200 px-4 py-3 rounded-xl text-sm font-semibold">
-
-                        ← Back Categories
-
-                    </button>
-
-                    <!-- SEARCH -->
-                    <div class="relative flex-1">
-
-                        <input
-                            id="categorySearchInput"
-                            type="text"
-                            placeholder="Search products..."
-                            class="w-full bg-slate-100 border border-transparent focus:border-emerald-500 focus:bg-white rounded-xl px-4 py-3 text-sm outline-none"
-                        />
-
-                    </div>
-
-                    <!-- PRICE SORT -->
-                    <select
-                        id="priceSortFilter"
-                        class="bg-slate-100 rounded-xl px-4 py-3 text-sm outline-none">
-
-                        <option value="recommended">
-                            Recommended Price
-                        </option>
-
-                        <option value="high">
-                            Highest Price
-                        </option>
-
-                        <option value="low">
-                            Lowest Price
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <!-- PRODUCTS -->
-                <div id="categoryProductsArea"
-                     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                </div>
-
-            </div>
-
-        `;
-
-        categoriesPage.insertAdjacentHTML(
-            "beforeend",
-            html
-        );
-
-    } else {
-
-        existingArea.classList.remove("hidden");
-
-    }
-
-function renderCategoryProducts(hub) {
-
-    const productContainer =
-        document.getElementById("categoryProductsArea");
-
-    const searchTerm =
-        document.getElementById("categorySearchInput")
-        ?.value
-        .toLowerCase() || "";
-
-    const priceSort =
-        document.getElementById("priceSortFilter")
-        ?.value || "recommended";
-
-    let filteredProducts =
-        productDataArray.filter(product => {
-
-            return (
-                product.structuralType === hub &&
-                (
-                    product.name.toLowerCase().includes(searchTerm)
-                    ||
-                    product.location.toLowerCase().includes(searchTerm)
-                )
-            );
-
-        });
-
-    // SORTING
-    if (priceSort === "high") {
-
-        filteredProducts.sort(
-            (a, b) => b.price - a.price
-        );
-
-    } else if (priceSort === "low") {
-
-        filteredProducts.sort(
-            (a, b) => a.price - b.price
-        );
-
-    }
-
-    // EMPTY
-    if (filteredProducts.length === 0) {
-
-        productContainer.innerHTML = `
-
-            <div class="col-span-full text-center py-12">
-
-                <h3 class="font-bold text-slate-700 mb-2">
-                    No products found
-                </h3>
-
-                <p class="text-sm text-slate-500">
-                    Try another keyword
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-    // PRODUCTS
-    productContainer.innerHTML =
-        filteredProducts.map(product => {
-
-            const quantity =
-                cartMemory[product.id]?.quantity || 0;
-
-            return `
-
-            <div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
-
-                <div>
-
-                    <div class="bg-slate-100 aspect-square w-full rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
-
-                        <div class="flex flex-col items-center justify-center w-full h-full text-slate-400/70 p-4 border border-dashed border-slate-200 rounded-xl">
-
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 stroke-width="1.2"
-                                 stroke="currentColor"
-                                 class="w-12 h-12 text-slate-300 mb-1">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Z" />
-
-                            </svg>
-
-                        </div>
-
-                        <span class="absolute top-2 left-2 text-[9px] font-bold uppercase ${product.trending ? 'bg-amber-500 text-white animate-pulse' : 'bg-slate-900 text-white'} px-2 py-0.5 rounded-md">
-
-                            ${product.trending ? '🔥 Trending' : product.tag}
-
-                        </span>
-
-                        <span class="absolute top-2 right-2 text-[9px] font-bold bg-emerald-600 text-white px-1.5 py-0.5 rounded-md shadow-xs">
-
-                            ${product.state}
-
-                        </span>
-
-                    </div>
-
-                    <div class="flex items-center gap-1.5">
-
-                        <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
-
-                            ${product.category}
-
-                        </span>
-
-                        <span class="text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-md">
-
-                            ${product.structuralType}
-
-                        </span>
-
-                    </div>
-
-                    <h3 class="font-bold text-slate-800 mt-2 group-hover:text-emerald-600 transition-colors text-sm leading-tight">
-
-                        ${product.name}
-
-                    </h3>
-
-                </div>
-
-                <div class="mt-4">
-
-                    <div class="flex items-baseline gap-1">
-
-                        <span class="text-lg font-bold text-slate-900">
-
-                            ₦${product.price.toLocaleString()}
-
-                        </span>
-
-                    </div>
-
-                    <div class="flex items-center gap-1 text-slate-500 text-[11px] mt-1.5 pt-1.5 border-t border-slate-100">
-
-                        <span class="truncate">
-                            ${product.location}
-                        </span>
-
-                    </div>
-
-                    <div class="mt-3">
-
-                        ${
-                            quantity === 0
-                            ?
-                            `
-                            <button
-                                onclick="
-                                    updateItemQuantity(${product.id}, 1);
-                                    renderCategoryProducts('${hub}');
-                                "
-                                class="w-full bg-slate-900 hover:bg-emerald-600 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all">
-
-                                Add to Cart
-
+        function selectCategoryHub(hub) {
+            window.currentCategoryHub = hub;
+            showTrendingOnlyMode = false;
+            window.currentCategoryHub = hub;
+            navigateToTab('categories');
+
+            const categoryCardsGrid = document.querySelector('#categoriesPageLayout .grid');
+            if (categoryCardsGrid) {
+                categoryCardsGrid.classList.add("hidden");
+            }
+
+            let existingArea = document.getElementById("categoryProductsWrapper");
+            if (!existingArea) {
+                const categoriesPage = document.getElementById("categoriesPageLayout");
+                const html = `
+                    <div id="categoryProductsWrapper" class="mt-8">
+                        <div class="flex flex-col lg:flex-row gap-3 mb-6">
+                            <button onclick="showCategoryCardsAgain(); showQuickLoader();" class="bg-slate-100 hover:bg-slate-200 px-4 py-3 rounded-xl text-sm font-semibold">
+                                ← Back Categories
                             </button>
-                            `
-                            :
-                            `
-                            <div class="flex items-center justify-between w-full bg-slate-100 rounded-xl p-1 border border-slate-200/50">
-
-                                <button
-                                    onclick="
-                                        updateItemQuantity(${product.id}, -1);
-                                        renderCategoryProducts('${hub}');
-                                    "
-                                    class="w-8 h-8 rounded-lg bg-white font-bold text-slate-700 flex items-center justify-center">
-
-                                    -
-
-                                </button>
-
-                                <span class="text-xs font-bold text-slate-900">
-
-                                    ${quantity}
-
-                                </span>
-
-                                <button
-                                    onclick="
-                                        updateItemQuantity(${product.id}, 1);
-                                        renderCategoryProducts('${hub}');
-                                    "
-                                    class="w-8 h-8 rounded-lg bg-white font-bold text-slate-700 flex items-center justify-center">
-
-                                    +
-
-                                </button>
-
+                            <div class="relative flex-1">
+                                <input id="categorySearchInput" type="text" placeholder="Search products..." class="w-full bg-slate-100 border border-transparent focus:border-emerald-500 focus:bg-white rounded-xl px-4 py-3 text-sm outline-none" />
                             </div>
-                            `
-                        }
-
+                            <select id="priceSortFilter" class="bg-slate-100 rounded-xl px-4 py-3 text-sm outline-none">
+                                <option value="recommended">Recommended Price</option>
+                                <option value="high">Highest Price</option>
+                                <option value="low">Lowest Price</option>
+                            </select>
+                        </div>
+                        <div id="categoryProductsArea" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
                     </div>
+                `;
+                categoriesPage.insertAdjacentHTML("beforeend", html);
+            } else {
+                existingArea.classList.remove("hidden");
+            }
 
-                </div>
+            // Setup listeners dynamically for the category page controls
+            document.getElementById("categorySearchInput").oninput = () => {
+                renderCategoryProducts(window.currentCategoryHub);
+            };
+            document.getElementById("priceSortFilter").onchange = () => {
+                renderCategoryProducts(window.currentCategoryHub);
+            };
 
-            </div>
+            renderCategoryProducts(hub);
+        }
 
-            `;
+        function renderCategoryProducts(hub) {
+            const productContainer = document.getElementById("categoryProductsArea");
+            if (!productContainer) return;
 
-        }).join("");
+            const searchTerm = document.getElementById("categorySearchInput")?.value.toLowerCase() || "";
+            const priceSort = document.getElementById("priceSortFilter")?.value || "recommended";
 
-}
+            let filteredProducts = productDataArray.filter(product => {
+                return (
+                    product.structuralType === hub &&
+                    (product.name.toLowerCase().includes(searchTerm) || product.location.toLowerCase().includes(searchTerm))
+                );
+            });
 
+            if (priceSort === "high") {
+                filteredProducts.sort((a, b) => b.price - a.price);
+            } else if (priceSort === "low") {
+                filteredProducts.sort((a, b) => a.price - b.price);
+            }
 
+            if (filteredProducts.length === 0) {
+                productContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <h3 class="font-bold text-slate-700 mb-2">No products found</h3>
+                        <p class="text-sm text-slate-500">Try another keyword</p>
+                    </div>
+                `;
+                return;
+            }
 
-    // LIVE SEARCH
-    document
-        .getElementById("categorySearchInput")
-        .oninput = () => {
+            productContainer.innerHTML = filteredProducts.map(product => {
+                const quantity = cartMemory[product.id]?.quantity || 0;
+                return `
+                    <div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+                        <div>
+                            <div class="bg-slate-100 aspect-square w-full rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
+                                <div class="flex flex-col items-center justify-center w-full h-full text-slate-400/70 p-4 border border-dashed border-slate-200 rounded-xl">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" class="w-12 h-12 text-slate-300 mb-1">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Z" />
+                                    </svg>
+                                </div>
+                                <span class="absolute top-2 left-2 text-[9px] font-bold uppercase ${product.trending ? 'bg-amber-500 text-white animate-pulse' : 'bg-slate-900 text-white'} px-2 py-0.5 rounded-md">
+                                    ${product.trending ? '🔥 Trending' : product.tag}
+                                </span>
+                                <span class="absolute top-2 right-2 text-[9px] font-bold bg-emerald-600 text-white px-1.5 py-0.5 rounded-md shadow-xs">
+                                    ${product.state}
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
+                                    ${product.category}
+                                </span>
+                                <span class="text-[10px] font-medium text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded-md">
+                                    ${product.structuralType}
+                                </span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 mt-2 group-hover:text-emerald-600 transition-colors text-sm leading-tight">
+                                ${product.name}
+                            </h3>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-lg font-bold text-slate-900">
+                                    ₦${product.price.toLocaleString()}
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-1 text-slate-500 text-[11px] mt-1.5 pt-1.5 border-t border-slate-100">
+                                <span class="truncate">${product.location}</span>
+                            </div>
+                            <div class="mt-3">
+                                ${quantity === 0 ? `
+                                    <button onclick="updateItemQuantity(${product.id}, 1); renderCategoryProducts('${hub}');" class="w-full bg-slate-900 hover:bg-emerald-600 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition-all">
+                                        Add to Cart
+                                    </button>
+                                ` : `
+                                    <div class="flex items-center justify-between w-full bg-slate-100 rounded-xl p-1 border border-slate-200/50">
+                                        <button onclick="updateItemQuantity(${product.id}, -1); renderCategoryProducts('${hub}');" class="w-8 h-8 rounded-lg bg-white font-bold text-slate-700 flex items-center justify-center"> - </button>
+                                        <span class="text-xs font-bold text-slate-900">${quantity}</span>
+                                        <button onclick="updateItemQuantity(${product.id}, 1); renderCategoryProducts('${hub}');" class="w-8 h-8 rounded-lg bg-white font-bold text-slate-700 flex items-center justify-center"> + </button>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
 
-            renderCategoryProducts(window.currentCategoryHub);
+        function showCategoryCardsAgain() {
+            const categoryCardsGrid = document.querySelector('#categoriesPageLayout .grid');
+            const wrapper = document.getElementById("categoryProductsWrapper");
 
-        };
+            if (categoryCardsGrid) {
+                categoryCardsGrid.classList.remove("hidden");
+            }
+            if (wrapper) {
+                wrapper.classList.add("hidden");
+            }
+        }
 
-    // PRICE FILTER
-    document
-        .getElementById("priceSortFilter")
-        .onchange = () => {
-
-            renderCategoryProducts(window.currentCategoryHub);
-
-        };
-
-    // INITIAL LOAD
-    renderCategoryProducts(hub);
-
-}
-
-
-function showCategoryCardsAgain() {
-
-    const categoryCardsGrid =
-        document.querySelector(
-            '#categoriesPageLayout .grid'
-        );
-
-    const wrapper =
-        document.getElementById(
-            "categoryProductsWrapper"
-        );
-
-    if (categoryCardsGrid) {
-        categoryCardsGrid.classList.remove("hidden");
-    }
-
-    if (wrapper) {
-        wrapper.classList.add("hidden");
-    }
-
-}
         function triggerTrendingDealsOnly() {
             showTrendingOnlyMode = true;
             document.getElementById('stateFilter').value = 'all';
@@ -1196,7 +1791,6 @@ function showCategoryCardsAgain() {
             
             navigateToTab('home');
             executeAppFilters();
-            
             closeSidebar();
             setTimeout(() => {
                 document.getElementById('filterSectionHub').scrollIntoView({ behavior: 'smooth' });
@@ -1310,7 +1904,6 @@ function showCategoryCardsAgain() {
             }
 
             products.forEach(product => {
-                // Read current volume count from state memory
                 const checkedQty = cartMemory[product.id] ? cartMemory[product.id].quantity : 0;
                 const activeCardNode = document.createElement("div");
                 activeCardNode.className = "bg-white border border-slate-100 rounded-2xl p-4 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between group";
@@ -1360,55 +1953,36 @@ function showCategoryCardsAgain() {
             });
         }
 
-        
-window.updateItemQuantity = function(id, change) {
+        window.updateItemQuantity = function(id, change) {
 
-    const product =
-        productDataArray.find(
-            item => item.id === id
-        );
+    const product = productDataArray.find(item => item.id === id);
 
     if (!product) return;
 
-    // CREATE ITEM
-    if (!cartMemory[id]) {
-
-        cartMemory[id] = {
-            ...product,
-            quantity: 0
-        };
-
+    // 🚫 BLOCK NON-SELLABLE PRODUCTS
+    if (product.sellable === false) {
+        alert("This product is not available for purchase.");
+        return;
     }
 
-    // CHANGE QUANTITY
+    if (!cartMemory[id]) {
+        cartMemory[id] = { ...product, quantity: 0 };
+    }
+
     cartMemory[id].quantity += change;
 
-    // REMOVE IF ZERO
     if (cartMemory[id].quantity <= 0) {
-
         delete cartMemory[id];
-
     }
 
-    // UPDATE MAIN PRODUCTS
     executeAppFilters();
 
-    // UPDATE CATEGORY PRODUCTS
     if (window.currentCategoryHub) {
-
-        renderCategoryProducts(
-            window.currentCategoryHub
-        );
-
+        renderCategoryProducts(window.currentCategoryHub);
     }
 
-    // UPDATE CART
     syncSidebarCartView();
-
-}
-
-
-
+};
 
         window.removeItemCompletely = function(id) {
             if (cartMemory[id]) {
@@ -1422,310 +1996,125 @@ window.updateItemQuantity = function(id, change) {
             syncSidebarCartView();
         }
 
+        // CART + TOTALS WITH FIXED DISTINCT BADGES
+        function syncSidebarCartView() {
+            const container = document.getElementById("sidebarCartItems");
+            const emptyLabel = document.getElementById("emptyCartMessage");
+            const checkoutPanel = document.getElementById("checkoutPanel");
+            const menuBadge = document.getElementById("sidebarMenuBadge");
+            const totalText = document.getElementById("cartTotalPrice");
+            const totalItemsCountLabel = document.getElementById("cartTotalItemsCount");
+            const globalCartBadges = document.querySelectorAll(".globalCartBadge");
+
+            const cartItems = Object.values(cartMemory);
+            
+            // CRITICAL FIX: Base distinct counts explicitly on unique properties keys
+            const uniqueProductTypesCount = Object.keys(cartMemory).length;
+            let totalPrice = 0;
+
+            container.innerHTML = "";
+
+            // EMPTY CART STATE CONTROL
+            if (cartItems.length === 0) {
+                if (emptyLabel) emptyLabel.classList.remove("hidden");
+                if (checkoutPanel) checkoutPanel.classList.add("hidden");
+                if (menuBadge) menuBadge.classList.add("hidden");
+
+                globalCartBadges.forEach(badge => {
+                    badge.classList.add("hidden");
+                });
+
+                container.innerHTML = "";
+                if (emptyLabel) container.appendChild(emptyLabel);
+
+                totalText.textContent = "₦0";
+                totalItemsCountLabel.textContent = "0 items";
+                return;
+            }
+
+            if (emptyLabel) emptyLabel.classList.add("hidden");
+            if (checkoutPanel) checkoutPanel.classList.remove("hidden");
+
+            // LOOP ACTIVE PRODUCTS
+            cartItems.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                totalPrice += subtotal;
+
+                const cartRow = document.createElement("div");
+                cartRow.className = "bg-slate-50 border border-slate-100 p-3 rounded-xl flex items-start justify-between gap-3";
+                cartRow.innerHTML = `
+                    <div class="flex-1 overflow-hidden">
+                        <h4 class="font-bold text-slate-800 text-xs leading-tight mb-1">
+                            ${item.name}
+                        </h4>
+                        <div class="text-[11px] text-slate-500">
+                            ₦${item.price.toLocaleString()} × ${item.quantity}
+                        </div>
+                        <div class="text-sm font-bold text-emerald-600 mt-1">
+                            ₦${subtotal.toLocaleString()}
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <div class="flex items-center gap-1 bg-white border border-slate-200 rounded-lg p-1">
+                            <button onclick="updateItemQuantity(${item.id}, -1)" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-rose-100 text-xs font-bold">-</button>
+                            <span class="text-xs font-bold w-5 text-center">${item.quantity}</span>
+                            <button onclick="updateItemQuantity(${item.id}, 1)" class="w-6 h-6 rounded-md bg-slate-100 hover:bg-emerald-100 text-xs font-bold">+</button>
+                        </div>
+                        <button onclick="removeItemCompletely(${item.id})" class="text-[10px] text-rose-500 hover:text-rose-700 font-bold">
+                            Remove
+                        </button>
+                    </div>
+                `;
+                container.appendChild(cartRow);
+            });
+
+            // OUTPUT PRICING DATA
+            totalText.textContent = `₦${totalPrice.toLocaleString()}`;
+            
+            // Adjust label text string based on item variety metrics instead of item accumulation totals
+            totalItemsCountLabel.textContent = `${uniqueProductTypesCount} product${uniqueProductTypesCount > 1 ? 's' : ''}`;
+
+            // UPDATE BADGES TO UNIQUE PRODUCT COUNT ONLY
+            if (menuBadge) {
+                menuBadge.classList.remove("hidden");
+                menuBadge.textContent = uniqueProductTypesCount;
+            }
+
+            globalCartBadges.forEach(badge => {
+                badge.classList.remove("hidden");
+                badge.textContent = uniqueProductTypesCount;
+            });
+
+            // Safely execute update chart if function definition exists down script stream
+            if (typeof updateCartChart === "function") {
+                updateCartChart();
+            }
+        }
 
-
-// CART + TOTALS
-function syncSidebarCartView() {
-
-    const container =
-        document.getElementById("sidebarCartItems");
-
-    const emptyLabel =
-        document.getElementById("emptyCartMessage");
-
-    const checkoutPanel =
-        document.getElementById("checkoutPanel");
-
-    const menuBadge =
-        document.getElementById("sidebarMenuBadge");
-
-    const totalText =
-        document.getElementById("cartTotalPrice");
-
-    const totalItemsCountLabel =
-        document.getElementById("cartTotalItemsCount");
-
-    const globalCartBadges =
-        document.querySelectorAll(".globalCartBadge");
-
-    const cartItems =
-        Object.values(cartMemory);
-
-    let totalQuantity = 0;
-    let totalPrice = 0;
-
-    container.innerHTML = "";
-
-    // EMPTY CART
-    if (cartItems.length === 0) {
-
-        emptyLabel.classList.remove("hidden");
-
-        checkoutPanel.classList.add("hidden");
-
-        menuBadge.classList.add("hidden");
-
-        globalCartBadges.forEach(badge => {
-
-            badge.classList.add("hidden");
-
-        });
-
-        container.innerHTML = "";
-
-        container.appendChild(emptyLabel);
-
-        totalText.textContent = "₦0";
-
-        totalItemsCountLabel.textContent = "0 items";
-
-        return;
-
-    }
-
-    // SHOW ACTIVE
-    emptyLabel.classList.add("hidden");
-
-    checkoutPanel.classList.remove("hidden");
-
-    // LOOP PRODUCTS
-    cartItems.forEach(item => {
-
-        const subtotal =
-            item.price * item.quantity;
-
-        totalQuantity += item.quantity;
-
-        totalPrice += subtotal;
-
-        const cartRow =
-            document.createElement("div");
-
-        cartRow.className =
-            "bg-slate-50 border border-slate-100 p-3 rounded-xl flex items-start justify-between gap-3";
-
-        cartRow.innerHTML = `
-
-            <div class="flex-1 overflow-hidden">
-
-                <h4 class="font-bold text-slate-800 text-xs leading-tight mb-1">
-
-                    ${item.name}
-
-                </h4>
-
-                <div class="text-[11px] text-slate-500">
-
-                    ₦${item.price.toLocaleString()}
-                    ×
-                    ${item.quantity}
-
-                </div>
-
-                <div class="text-sm font-bold text-emerald-600 mt-1">
-
-                    ₦${subtotal.toLocaleString()}
-
-                </div>
-
-            </div>
-
-            <div class="flex flex-col items-end gap-2">
-
-                <div class="flex items-center gap-1 bg-white border border-slate-200 rounded-lg p-1">
-
-                    <button
-                        onclick="updateItemQuantity(${item.id}, -1)"
-                        class="w-6 h-6 rounded-md bg-slate-100 hover:bg-rose-100 text-xs font-bold">
-
-                        -
-
-                    </button>
-
-                    <span class="text-xs font-bold w-5 text-center">
-
-                        ${item.quantity}
-
-                    </span>
-
-                    <button
-                        onclick="updateItemQuantity(${item.id}, 1)"
-                        class="w-6 h-6 rounded-md bg-slate-100 hover:bg-emerald-100 text-xs font-bold">
-
-                        +
-
-                    </button>
-
-                </div>
-
-                <button
-                    onclick="removeItemCompletely(${item.id})"
-                    class="text-[10px] text-rose-500 hover:text-rose-700 font-bold">
-
-                    Remove
-
-                </button>
-
-            </div>
-
-        `;
-
-        container.appendChild(cartRow);
-
-    });
-
-    // TOTALS
-    totalText.textContent =
-        `₦${totalPrice.toLocaleString()}`;
-
-    totalItemsCountLabel.textContent =
-        `${totalQuantity} item${totalQuantity > 1 ? 's' : ''}`;
-
-    // BADGES
-    menuBadge.classList.remove("hidden");
-
-    menuBadge.textContent = totalQuantity;
-
-    globalCartBadges.forEach(badge => {
-
-        badge.classList.remove("hidden");
-
-        badge.textContent = totalQuantity;
-
-    });
-
-}
         function updateCartChart() {
+            const chartContainer = document.getElementById("cartChartContainer");
+            const chartBars = document.getElementById("cartChartBars");
+            const chartTotalProducts = document.getElementById("chartTotalProducts");
 
-    const chartContainer =
-        document.getElementById("cartChartContainer");
+            if (!chartContainer || !chartBars || !chartTotalProducts) return;
 
-    const chartBars =
-        document.getElementById("cartChartBars");
+            const cartItems = Object.values(cartMemory);
+            const uniqueProductTypesCount = Object.keys(cartMemory).length;
 
-    const chartTotalProducts =
-        document.getElementById("chartTotalProducts");
+            if (cartItems.length === 0) {
+                chartContainer.classList.add("hidden");
+                chartBars.innerHTML = "";
+                chartTotalProducts.textContent = "0 Products";
+                return;
+            }
 
-    if (!chartContainer || !chartBars || !chartTotalProducts)
-        return;
-
-    const cartItems = Object.values(cartMemory);
-
-    if (cartItems.length === 0) {
-
-        chartContainer.classList.add("hidden");
-
-        chartBars.innerHTML = "";
-
-        chartTotalProducts.textContent = "0 Products";
-
-        return;
-    }
-
-    chartContainer.classList.remove("hidden");
-
-    chartBars.innerHTML = "";
-
-    let totalProducts = 0;
-
-    cartItems.forEach(item => {
-
-        const quantity = item.quantity || 1;
-
-        totalProducts += quantity;
-
-        const height =
-            Math.min(140, 35 + (quantity * 20));
-
-        const barWrapper = document.createElement("div");
-
-        barWrapper.className =
-            "min-w-[60px] flex flex-col items-center justify-end h-full";
-
-        barWrapper.innerHTML = `
-        
-            <span class="text-[11px] font-bold text-slate-700 mb-1">
-                ${quantity}x
-            </span>
-
-            <div class="w-12 rounded-t-2xl bg-emerald-500 transition-all duration-300"
-                 style="height:${height}px">
-            </div>
-
-            <span class="text-[10px] text-center mt-2 text-slate-600 leading-tight">
-                ${item.name.substring(0, 10)}
-            </span>
-        `;
-
-        chartBars.appendChild(barWrapper);
-
-    });
-
-    chartTotalProducts.textContent =
-        totalProducts + " Products";
-}
-
-
-function refreshCartSummary() {
-
-    let totalItems = 0;
-
-    let totalPrice = 0;
-
-    Object.values(cartMemory).forEach(item => {
-
-        totalItems += item.quantity;
-
-        totalPrice += item.price * item.quantity;
-
-    });
-
-    document.getElementById("cartTotalItemsCount").textContent =
-        totalItems + " units";
-
-    document.getElementById("cartTotalPrice").textContent =
-        "₦" + totalPrice.toLocaleString();
-
-    const checkoutPanel =
-        document.getElementById("checkoutPanel");
-
-    if (totalItems > 0) {
-
-        checkoutPanel.classList.remove("hidden");
-
-    } else {
-
-        checkoutPanel.classList.add("hidden");
-
-    }
-
-    updateCartChart();
-}
-
-
-
-function showCategoryCardsAgain() {
-
-    const cardsGrid =
-        document.querySelector(
-            '#categoriesPageLayout .grid'
-        );
-
-    const wrapper =
-        document.getElementById(
-            "categoryProductsWrapper"
-        );
-
-    if (cardsGrid) {
-        cardsGrid.classList.remove("hidden");
-    }
-
-    if (wrapper) {
-        wrapper.classList.add("hidden");
-    }
-
-}
-    </script>
+            chartContainer.classList.remove("hidden");
+            chartBars.innerHTML = "";
+            chartTotalProducts.textContent = `${uniqueProductTypesCount} Product${uniqueProductTypesCount > 1 ? 's' : ''}`;
+            
+            // Optional chart rendering calculations can go here
+        }
+</script>
     <script>
 
 /* Desktop Search */
@@ -1815,5 +2204,6 @@ function showQuickLoader() {
 }
 
 </script>
+
 </body>
 </html>
